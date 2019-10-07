@@ -1,0 +1,11 @@
+## Exclude json packing results
+Json/4_PackingResults/*.json
+
+## Exclude Revit scenario file
+Json/5_VisualizationJob/*.rvt
+
+## Exclude ipynb checkpoints
+Jupyter/.ipynb_checkpoints/
+
+## Exclude Revit backup files
+*.*.rvt

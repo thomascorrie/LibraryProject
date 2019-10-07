@@ -1,0 +1,702 @@
+{
+  "bookcases": {
+    "5": {
+      "totalBookcaseHeight": 2020.000000000002,
+      "Revit Family Name": "Ikea_Furniture_BillyBookcase_Flexible",
+      "Revit Type Name": "Ikea_Furniture_BillyBookcase_40x28x202cm",
+      "csYAxisX": 0.0,
+      "csXAxisX": 1.0,
+      "id": 5,
+      "csOriginY": 1029.9999999999934,
+      "csOriginX": 1600.0000000000266,
+      "csOriginZ": 0.0,
+      "heightAboveBookcase": 0.0,
+      "csYAxisY": 1.0,
+      "csXAxisY": 0.0,
+      "shelves": {
+        "5": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1038.5,
+          "shelfParam": "S-24",
+          "id": 5,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1057.5
+        },
+        "4": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 746.0,
+          "shelfParam": "S-18",
+          "id": 4,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 765.0
+        },
+        "7": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1704.5,
+          "shelfParam": "S-41",
+          "id": 7,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1723.5
+        },
+        "6": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1384.5,
+          "shelfParam": "S-31",
+          "id": 6,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1403.5
+        },
+        "1": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 75.0,
+          "shelfParam": "S-1",
+          "id": 1,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 94.0
+        },
+        "3": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 554.0,
+          "shelfParam": "S-12",
+          "id": 3,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 573.0
+        },
+        "2": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 362.0,
+          "shelfParam": "S-6",
+          "id": 2,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 381.0
+        },
+        "8": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 1998.0,
+          "shelfParam": "S-47",
+          "id": 8,
+          "maxY": 0.0,
+          "minX": 19.0,
+          "maxZ": 2017.0
+        }
+      }
+    },
+    "4": {
+      "totalBookcaseHeight": 2020.000000000002,
+      "Revit Family Name": "Ikea_Furniture_BillyBookcase_Flexible",
+      "Revit Type Name": "Ikea_Furniture_BillyBookcase_40x28x202cm",
+      "csYAxisX": 0.0,
+      "csXAxisX": 1.0,
+      "id": 4,
+      "csOriginY": 1029.9999999999973,
+      "csOriginX": 1200.0000000000298,
+      "csOriginZ": 0.0,
+      "heightAboveBookcase": 0.0,
+      "csYAxisY": 1.0,
+      "csXAxisY": 0.0,
+      "shelves": {
+        "5": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1384.5,
+          "shelfParam": "S-31",
+          "id": 5,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1403.5
+        },
+        "4": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1038.5,
+          "shelfParam": "S-24",
+          "id": 4,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1057.5
+        },
+        "7": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 1998.0,
+          "shelfParam": "S-47",
+          "id": 7,
+          "maxY": 0.0,
+          "minX": 19.0,
+          "maxZ": 2017.0
+        },
+        "6": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1704.5,
+          "shelfParam": "S-41",
+          "id": 6,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1723.5
+        },
+        "1": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 75.0,
+          "shelfParam": "S-1",
+          "id": 1,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 94.0
+        },
+        "3": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 746.0,
+          "shelfParam": "S-18",
+          "id": 3,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 765.0
+        },
+        "2": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 458.0,
+          "shelfParam": "S-9",
+          "id": 2,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 477.0
+        }
+      }
+    },
+    "7": {
+      "totalBookcaseHeight": 2020.000000000002,
+      "Revit Family Name": "Ikea_Furniture_BillyBookcase_Flexible",
+      "Revit Type Name": "Ikea_Furniture_BillyBookcase_40x28x202cm",
+      "csYAxisX": 0.0,
+      "csXAxisX": 1.0,
+      "id": 7,
+      "csOriginY": 1029.9999999999909,
+      "csOriginX": 2400.0000000000268,
+      "csOriginZ": 0.0,
+      "heightAboveBookcase": 0.0,
+      "csYAxisY": 1.0,
+      "csXAxisY": 0.0,
+      "shelves": {
+        "5": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1038.5,
+          "shelfParam": "S-24",
+          "id": 5,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1057.5
+        },
+        "4": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 746.0,
+          "shelfParam": "S-18",
+          "id": 4,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 765.0
+        },
+        "7": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 1704.5,
+          "shelfParam": "S-41",
+          "id": 7,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1723.5
+        },
+        "6": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 1416.5,
+          "shelfParam": "S-32",
+          "id": 6,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1435.5
+        },
+        "1": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 75.0,
+          "shelfParam": "S-1",
+          "id": 1,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 94.0
+        },
+        "3": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 554.0,
+          "shelfParam": "S-12",
+          "id": 3,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 573.0
+        },
+        "2": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 362.0,
+          "shelfParam": "S-6",
+          "id": 2,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 381.0
+        },
+        "8": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 1998.0,
+          "shelfParam": "S-47",
+          "id": 8,
+          "maxY": 0.0,
+          "minX": 19.0,
+          "maxZ": 2017.0
+        }
+      }
+    },
+    "6": {
+      "totalBookcaseHeight": 2020.000000000002,
+      "Revit Family Name": "Ikea_Furniture_BillyBookcase_Flexible",
+      "Revit Type Name": "Ikea_Furniture_BillyBookcase_40x28x202cm",
+      "csYAxisX": 0.0,
+      "csXAxisX": 1.0,
+      "id": 6,
+      "csOriginY": 1029.9999999999923,
+      "csOriginX": 2000.0000000000266,
+      "csOriginZ": 0.0,
+      "heightAboveBookcase": 0.0,
+      "csYAxisY": 1.0,
+      "csXAxisY": 0.0,
+      "shelves": {
+        "5": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1038.5,
+          "shelfParam": "S-24",
+          "id": 5,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1057.5
+        },
+        "4": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 746.0,
+          "shelfParam": "S-18",
+          "id": 4,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 765.0
+        },
+        "7": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1704.5,
+          "shelfParam": "S-41",
+          "id": 7,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1723.5
+        },
+        "6": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1384.5,
+          "shelfParam": "S-31",
+          "id": 6,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1403.5
+        },
+        "1": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 75.0,
+          "shelfParam": "S-1",
+          "id": 1,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 94.0
+        },
+        "3": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 554.0,
+          "shelfParam": "S-12",
+          "id": 3,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 573.0
+        },
+        "2": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 362.0,
+          "shelfParam": "S-6",
+          "id": 2,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 381.0
+        },
+        "8": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 1998.0,
+          "shelfParam": "S-47",
+          "id": 8,
+          "maxY": 0.0,
+          "minX": 19.0,
+          "maxZ": 2017.0
+        }
+      }
+    },
+    "1": {
+      "totalBookcaseHeight": 2020.000000000002,
+      "Revit Family Name": "Ikea_Furniture_BillyBookcase_Flexible",
+      "Revit Type Name": "Ikea_Furniture_BillyBookcase_40x28x202cm",
+      "csYAxisX": 0.0,
+      "csXAxisX": 1.0,
+      "id": 1,
+      "csOriginY": 1029.9999999999959,
+      "csOriginX": 2.368771845340234E-11,
+      "csOriginZ": 0.0,
+      "heightAboveBookcase": 0.0,
+      "csYAxisY": 1.0,
+      "csXAxisY": 0.0,
+      "shelves": {
+        "5": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1384.5,
+          "shelfParam": "S-31",
+          "id": 5,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1403.5
+        },
+        "4": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 1038.5,
+          "shelfParam": "S-24",
+          "id": 4,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1057.5
+        },
+        "7": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 1998.0,
+          "shelfParam": "S-47",
+          "id": 7,
+          "maxY": 0.0,
+          "minX": 19.0,
+          "maxZ": 2017.0
+        },
+        "6": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1704.5,
+          "shelfParam": "S-41",
+          "id": 6,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1723.5
+        },
+        "1": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 75.0,
+          "shelfParam": "S-1",
+          "id": 1,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 94.0
+        },
+        "3": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 746.0,
+          "shelfParam": "S-18",
+          "id": 3,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 765.0
+        },
+        "2": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 458.0,
+          "shelfParam": "S-9",
+          "id": 2,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 477.0
+        }
+      }
+    },
+    "3": {
+      "totalBookcaseHeight": 2020.000000000002,
+      "Revit Family Name": "Ikea_Furniture_BillyBookcase_Flexible",
+      "Revit Type Name": "Ikea_Furniture_BillyBookcase_40x28x202cm",
+      "csYAxisX": 0.0,
+      "csXAxisX": 1.0,
+      "id": 3,
+      "csOriginY": 1029.9999999999973,
+      "csOriginX": 800.00000000002751,
+      "csOriginZ": 0.0,
+      "heightAboveBookcase": 0.0,
+      "csYAxisY": 1.0,
+      "csXAxisY": 0.0,
+      "shelves": {
+        "5": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1384.5,
+          "shelfParam": "S-31",
+          "id": 5,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1403.5
+        },
+        "4": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1038.5,
+          "shelfParam": "S-24",
+          "id": 4,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1057.5
+        },
+        "7": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 1998.0,
+          "shelfParam": "S-47",
+          "id": 7,
+          "maxY": 0.0,
+          "minX": 19.0,
+          "maxZ": 2017.0
+        },
+        "6": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1704.5,
+          "shelfParam": "S-41",
+          "id": 6,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1723.5
+        },
+        "1": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 75.0,
+          "shelfParam": "S-1",
+          "id": 1,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 94.0
+        },
+        "3": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 746.0,
+          "shelfParam": "S-18",
+          "id": 3,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 765.0
+        },
+        "2": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 458.0,
+          "shelfParam": "S-9",
+          "id": 2,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 477.0
+        }
+      }
+    },
+    "2": {
+      "totalBookcaseHeight": 2020.000000000002,
+      "Revit Family Name": "Ikea_Furniture_BillyBookcase_Flexible",
+      "Revit Type Name": "Ikea_Furniture_BillyBookcase_40x28x202cm",
+      "csYAxisX": 0.0,
+      "csXAxisX": 1.0,
+      "id": 2,
+      "csOriginY": 1029.9999999999973,
+      "csOriginX": 400.00000000002694,
+      "csOriginZ": 0.0,
+      "heightAboveBookcase": 0.0,
+      "csYAxisY": 1.0,
+      "csXAxisY": 0.0,
+      "shelves": {
+        "5": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 1384.5,
+          "shelfParam": "S-31",
+          "id": 5,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1403.5
+        },
+        "4": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1038.5,
+          "shelfParam": "S-24",
+          "id": 4,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1057.5
+        },
+        "7": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Empty",
+          "minZ": 1998.0,
+          "shelfParam": "S-47",
+          "id": 7,
+          "maxY": 0.0,
+          "minX": 19.0,
+          "maxZ": 2017.0
+        },
+        "6": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 1704.5,
+          "shelfParam": "S-41",
+          "id": 6,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 1723.5
+        },
+        "1": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 75.0,
+          "shelfParam": "S-1",
+          "id": 1,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 94.0
+        },
+        "3": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 746.0,
+          "shelfParam": "S-18",
+          "id": 3,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 765.0
+        },
+        "2": {
+          "minY": -275.0,
+          "maxX": 381.0,
+          "shelfType": "Shelf-Fixed",
+          "minZ": 522.0,
+          "shelfParam": "S-11",
+          "id": 2,
+          "maxY": -3.99,
+          "minX": 19.0,
+          "maxZ": 541.0
+        }
+      }
+    }
+  },
+  "scenario": {
+    "combinations": 1.0,
+    "dynamoShort": "2.0.3",
+    "description": "Seven Shelves as Now",
+    "username": "thomas.corrie",
+    "revitFilename": "FurtherShelves_SevenAsNow",
+    "datetime": "2019-10-06T11:32:10.3140902+01:00",
+    "platform": "Revit",
+    "computer": "HA-L1918",
+    "numBookcases": 7,
+    "dynamoLong": "2.0.3.8810",
+    "scenarioName": "191006T113210_SevenShelvesasNow",
+    "dynamoFilename": "FurtherLibrary_1_CreateBookcaseScenario"
+  }
+}
