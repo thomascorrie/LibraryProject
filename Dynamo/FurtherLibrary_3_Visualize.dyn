@@ -4,15 +4,20 @@
   "Description": null,
   "Name": "FurtherLibrary_3_Visualize",
   "ElementResolver": {
-    "ResolutionMap": {}
+    "ResolutionMap": {
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
   },
   "Inputs": [],
   "Outputs": [],
   "Nodes": [
     {
       "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
-      "HintPath": "C:\\Users\\thomas.corrie\\Box Sync\\Library\\Json\\PackingResults\\191006T113210_SevenShelvesasNow_191006T140606.json",
-      "InputValue": "Json\\PackingResults\\191006T113210_SevenShelvesasNow_191006T140606.json",
+      "HintPath": "C:\\Users\\Thomas.corrie\\Box Sync\\Library\\libraryproject\\Json\\5_VisualizationJob\\visualizationJob.json",
+      "InputValue": "..\\Json\\5_VisualizationJob\\visualizationJob.json",
       "NodeType": "ExtensionNode",
       "Id": "4c913f5ca236496a9b1968f45588cadd",
       "Inputs": [],
@@ -2777,7 +2782,7 @@
       "MaximumValue": 2.0,
       "MinimumValue": 0.0,
       "StepValue": 1.0,
-      "InputValue": 1.0,
+      "InputValue": 0.0,
       "Id": "998e9db184d24017bbde487fac6af1cf",
       "Inputs": [],
       "Outputs": [
@@ -6913,7 +6918,7 @@
     },
     {
       "ConcreteType": "DSRevitNodesUI.Views, DSRevitNodesUI",
-      "SelectedIndex": 32,
+      "SelectedIndex": 31,
       "NodeType": "ExtensionNode",
       "Id": "0f03f4dcd6f146389568c0cb838c1734",
       "Inputs": [],
@@ -6933,7 +6938,7 @@
     },
     {
       "ConcreteType": "DSRevitNodesUI.Views, DSRevitNodesUI",
-      "SelectedIndex": 33,
+      "SelectedIndex": 32,
       "NodeType": "ExtensionNode",
       "Id": "754833440faf46afbea5f8036528bafd",
       "Inputs": [],
@@ -7806,7 +7811,7 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "# Adapted form Archi-Lab nodes View.HideElements, View.UnhideElements\r\n# Enable Python support and load DesignScript library\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n# Import DocumentManager and TransactionManager\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\n# Guids\r\nfrom System import Guid\r\n\r\n# Import Element wrapper extension methods\r\nimport clr\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\n# Import RevitAPI\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\n# Import System\r\nimport System\r\nfrom System.Collections.Generic import *\r\n\r\n#itertools\r\nfrom itertools import groupby\r\nfrom operator import itemgetter\r\n\r\n# Import os\r\nimport sys\r\nsys.path.append(r'C:\\Program Files (x86)\\IronPython 2.7\\Lib')\r\nimport os\r\nimport glob\r\n\r\ndef HideElement(view, item):\r\n\tif not item.IsHidden(view) and item.CanBeHidden(view):\r\n\t\tids = List[ElementId]()\r\n\t\tids.Add(item.Id)\r\n\t\tview.HideElements(ids)\r\n\treturn None\r\n\t\r\ndef UnhideElement(view, item):\r\n\tif item.IsHidden(view):\r\n\t\tids = List[ElementId]()\r\n\t\tids.Add(item.Id)\r\n\t\tview.UnhideElements(ids)\r\n\treturn None\r\n\t\r\ndef HideElements(view, items):\r\n\tids = List[ElementId]()\r\n\tfor item in items:\r\n\t\tif not item.IsHidden(view) and item.CanBeHidden(view):\r\n\t\t\tids.Add(item.Id)\r\n\tif len(ids) > 0:\r\n\t\tview.HideElements(ids)\r\n\treturn None\r\n\t\r\ndef UnhideElements(view, items):\r\n\tids = List[ElementId]()\r\n\tfor item in items:\r\n\t\tif item.IsHidden(view):\r\n\t\t\tids.Add(item.Id)\r\n\tif len(ids) > 0:\r\n\t\tview.UnhideElements(ids)\r\n\treturn None\r\n\t\r\ndef Rename(prefix,count,sheet):\r\n\tlist_of_files = glob.glob(imagePath + '\\\\*' + sheet.Name + '*') \r\n\tlatest_file = max(list_of_files, key=os.path.getctime)\r\n\tfile_rename = imagePath + '\\\\' + prefix + '-' + sheet.Name + '-' + str(count) + '.png'\r\n\ttry:\r\n\t\tos.rename(latest_file, file_rename)\r\n\texcept: # File already exists\r\n\t\tos.remove(file_rename)\r\n\t\tos.rename(latest_file, file_rename)\r\n\treturn None\r\n\r\nitems = UnwrapElement(IN[0])\r\nsequence = IN[1]\r\nviews = UnwrapElement(IN[2])\r\nsheets = UnwrapElement(IN[3])\r\nimageWidth = IN[4]\r\npathExport = IN[5]\r\npackName = IN[6]\r\ngroups = IN[7]\r\nscores = IN[8]\r\nunplacedItems = UnwrapElement(IN[9])\r\nunplacedItemsIds = IN[10]\r\nrunGroupImages = IN[11]\r\nrunScoreImages = IN[12]\r\n\r\n# Create export list of views and sheets\r\nsheetIds = List[ElementId]()\r\nfor sheet in sheets:\r\n\tsheetIds.Add(sheet.Id)\r\n\r\n# Image Export Options\r\nimagePath = pathExport\r\niOpt = ImageExportOptions()\r\niOpt.FilePath = imagePath\r\niOpt.ExportRange = ExportRange.SetOfViews\r\niOpt.SetViewsAndSheets(sheetIds)\r\niOpt.HLRandWFViewsFileType = ImageFileType.PNG\r\niOpt.ShadowViewsFileType = ImageFileType.PNG\r\niOpt.PixelSize = imageWidth\r\n\r\n# Sheet Comments Parameter\r\nguid = Guid('c42a315f-86f2-4f7d-bb8f-652afde0b23b')\r\n\r\n# Hide all unplaced items\r\nfor v in views: \r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tHideElements(v,unplacedItems)\r\n\tdoc.Regenerate()\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\r\n# GROUP IMAGES\r\nif runGroupImages:\r\n\tsortedItemsGroup = [x for y, x in sorted(zip(groups,items))]\r\n\tsortedGroups = sorted(groups)\r\n\tgroupItems = []\r\n\tgroupKeys = []\r\n\tfor k, group in groupby(zip(sortedGroups, sortedItemsGroup), itemgetter(0)):\r\n\t\tgroupItems.append([])\r\n\t\tgroupKeys.append(k)\r\n\t\tfor g in group:\r\n\t\t\tgroupItems[-1].append(g[1])\r\n\t\t\r\n\tfor k, g in zip(groupKeys, groupItems):\r\n\t\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\t\tfor view in views:\r\n\t\t\tHideElements(view,items)\r\n\t\t\tUnhideElements(view, g)\r\n\t\tfor sheet in sheets:\r\n\t\t\tparam = sheet.get_Parameter(guid)\r\n\t\t\tparam.Set('Group: ' + str(k))\r\n\t\tiOpt.FilePath = imagePath + '\\\\Group_' + str(k)\t\t\r\n\t\tdoc.Regenerate() # just calling uidoc.RefreshActiveView() didn't do the trick\r\n\t\tdoc.ExportImage(iOpt)\r\n\t\tTransactionManager.Instance.TransactionTaskDone()\r\n\t\t#for sheet in sheets:\r\n\t\t\t#Rename('group',str(k),sheet)\r\n\t\r\n# SCORE IMAGES\r\nif runScoreImages:\r\n\tsortedItemsScore = [x for y, x in sorted(zip(scores,items))]\r\n\tsortedScores = sorted(scores)\r\n\tscoreItems = []\r\n\tscoreKeys = []\r\n\tfor k, group in groupby(zip(sortedScores, sortedItemsScore), itemgetter(0)):\r\n\t\tscoreItems.append([])\r\n\t\tscoreKeys.append(k)\r\n\t\tfor g in group:\r\n\t\t\tscoreItems[-1].append(g[1])\r\n\t\t\t\r\n\tfor k, g in zip(scoreKeys, scoreItems):\r\n\t\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\t\tfor view in views:\r\n\t\t\tHideElements(view,items)\r\n\t\t\tUnhideElements(view, g)\r\n\t\tfor sheet in sheets:\r\n\t\t\tparam = sheet.get_Parameter(guid)\r\n\t\t\tparam.Set('Score: ' + str(k))\r\n\t\tiOpt.FilePath = imagePath + '\\\\Score_' + str(k*100)\t\t\r\n\t\tdoc.Regenerate() # just calling uidoc.RefreshActiveView() didn't do the trick\r\n\t\tdoc.ExportImage(iOpt)\r\n\t\tTransactionManager.Instance.TransactionTaskDone()\r\n\t\tfor sheet in sheets:\r\n\t\t\tRename('score',str(k*100),sheet)\r\n\r\n# Ensure all placed items are hidden and unplaced items are unhidden\r\nfor v in views: \r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tHideElements(v,items)\r\n\tUnhideElements(v,unplacedItems)\r\n\tdoc.Regenerate()\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\t\r\n# Export Initial Image\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfor sheet in sheets:\r\n\tparam = sheet.get_Parameter(guid)\r\n\tparam.Set('')\r\ndoc.Regenerate()\r\niOpt.FilePath = imagePath + '\\\\0'\r\ndoc.ExportImage(iOpt)\r\nTransactionManager.Instance.TransactionTaskDone()\r\nfor sheet in sheets:\r\n\tRename('item','0',sheet)\r\n\t\r\n# Sort items by sequence\r\nsortedItems = [x for y, x in sorted(zip(sequence,items))]\r\n\r\n# Loop through items in order\r\nout = []\r\nids = []\r\ntotal = len(sortedItems)\r\ncount = 1\r\nfor item in sortedItems[0:10]:\r\n\tbookId = int(item.Name.split(\" \")[1]) # Get id from unplaced item name\r\n\tunplacedItem = unplacedItems[unplacedItemsIds.index(bookId)] # Get unplaced item\r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tfor view in views:\r\n\t\tUnhideElement(view, item)\r\n\t\tHideElement(view, unplacedItem)\r\n\tiOpt.FilePath = imagePath + '\\\\' + str(count)\r\n\tfor sheet in sheets:\r\n\t\tparam = sheet.get_Parameter(guid)\r\n\t\tparam.Set('Book ' + str(count) + ' / ' + str(total))\t\t\r\n\tdoc.Regenerate() # just calling uidoc.RefreshActiveView() didn't do the trick\r\n\tdoc.ExportImage(iOpt)\r\n\tfor sheet in sheets:\r\n\t\tRename('item',str(count),sheet)\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\tout.append(item)\r\n\tcount = count + 1\r\n\r\n# Ensure all items are unhidden\r\nfor v in views: \r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tUnhideElements(v,items)\r\n\tUnhideElements(v,unplacedItems)\r\n\tdoc.Regenerate()\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\r\n# Assign your output to the OUT variable.\r\nOUT = out, ids\r\n",
+      "Code": "# Adapted form Archi-Lab nodes View.HideElements, View.UnhideElements\r\n# Enable Python support and load DesignScript library\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n# Import DocumentManager and TransactionManager\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\n# Guids\r\nfrom System import Guid\r\n\r\n# Import Element wrapper extension methods\r\nimport clr\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\n# Import RevitAPI\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\n# Import System\r\nimport System\r\nfrom System.Collections.Generic import *\r\n\r\n#itertools\r\nfrom itertools import groupby\r\nfrom operator import itemgetter\r\n\r\n# Import os\r\nimport sys\r\nsys.path.append(r'C:\\Program Files (x86)\\IronPython 2.7\\Lib')\r\nimport os\r\nimport glob\r\n\r\ndef HideElement(view, item):\r\n\tif not item.IsHidden(view) and item.CanBeHidden(view):\r\n\t\tids = List[ElementId]()\r\n\t\tids.Add(item.Id)\r\n\t\tview.HideElements(ids)\r\n\treturn None\r\n\t\r\ndef UnhideElement(view, item):\r\n\tif item.IsHidden(view):\r\n\t\tids = List[ElementId]()\r\n\t\tids.Add(item.Id)\r\n\t\tview.UnhideElements(ids)\r\n\treturn None\r\n\t\r\ndef HideElements(view, items):\r\n\tids = List[ElementId]()\r\n\tfor item in items:\r\n\t\tif not item.IsHidden(view) and item.CanBeHidden(view):\r\n\t\t\tids.Add(item.Id)\r\n\tif len(ids) > 0:\r\n\t\tview.HideElements(ids)\r\n\treturn None\r\n\t\r\ndef UnhideElements(view, items):\r\n\tids = List[ElementId]()\r\n\tfor item in items:\r\n\t\tif item.IsHidden(view):\r\n\t\t\tids.Add(item.Id)\r\n\tif len(ids) > 0:\r\n\t\tview.UnhideElements(ids)\r\n\treturn None\r\n\t\r\ndef Rename(prefix,count,sheet):\r\n\tlist_of_files = glob.glob(imagePath + '\\\\*' + sheet.Name + '*') \r\n\tlatest_file = max(list_of_files, key=os.path.getctime)\r\n\tfile_rename = imagePath + '\\\\' + prefix + '-' + sheet.Name + '-' + str(count) + '.png'\r\n\ttry:\r\n\t\tos.rename(latest_file, file_rename)\r\n\texcept: # File already exists\r\n\t\tos.remove(file_rename)\r\n\t\tos.rename(latest_file, file_rename)\r\n\treturn None\r\n\r\nitems = UnwrapElement(IN[0])\r\nsequence = IN[1]\r\nviews = UnwrapElement(IN[2])\r\nsheets = UnwrapElement(IN[3])\r\nimageWidth = IN[4]\r\npathExport = IN[5]\r\npackName = IN[6]\r\ngroups = IN[7]\r\nscores = IN[8]\r\nunplacedItems = UnwrapElement(IN[9])\r\nunplacedItemsIds = IN[10]\r\nrunGroupImages = IN[11]\r\nrunScoreImages = IN[12]\r\n\r\n# Create export list of views and sheets\r\nsheetIds = List[ElementId]()\r\nfor sheet in sheets:\r\n\tsheetIds.Add(sheet.Id)\r\n\r\n# Image Export Options\r\nimagePath = pathExport\r\niOpt = ImageExportOptions()\r\niOpt.FilePath = imagePath\r\niOpt.ExportRange = ExportRange.SetOfViews\r\niOpt.SetViewsAndSheets(sheetIds)\r\niOpt.HLRandWFViewsFileType = ImageFileType.PNG\r\niOpt.ShadowViewsFileType = ImageFileType.PNG\r\niOpt.PixelSize = imageWidth\r\n\r\n# Sheet Comments Parameter\r\nguid = Guid('c42a315f-86f2-4f7d-bb8f-652afde0b23b')\r\n\r\n# Hide all unplaced items\r\nfor v in views: \r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tHideElements(v,unplacedItems)\r\n\tdoc.Regenerate()\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\r\n# GROUP IMAGES\r\nif runGroupImages:\r\n\tsortedItemsGroup = [x for y, x in sorted(zip(groups,items))]\r\n\tsortedGroups = sorted(groups)\r\n\tgroupItems = []\r\n\tgroupKeys = []\r\n\tfor k, group in groupby(zip(sortedGroups, sortedItemsGroup), itemgetter(0)):\r\n\t\tgroupItems.append([])\r\n\t\tgroupKeys.append(k)\r\n\t\tfor g in group:\r\n\t\t\tgroupItems[-1].append(g[1])\r\n\t\t\r\n\tfor k, g in zip(groupKeys, groupItems):\r\n\t\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\t\tfor view in views:\r\n\t\t\tHideElements(view,items)\r\n\t\t\tUnhideElements(view, g)\r\n\t\tfor sheet in sheets:\r\n\t\t\tparam = sheet.get_Parameter(guid)\r\n\t\t\tparam.Set('Group: ' + str(k))\r\n\t\tiOpt.FilePath = imagePath + '\\\\Group_' + str(k)\t\t\r\n\t\tdoc.Regenerate() # just calling uidoc.RefreshActiveView() didn't do the trick\r\n\t\tdoc.ExportImage(iOpt)\r\n\t\tTransactionManager.Instance.TransactionTaskDone()\r\n\t\t#for sheet in sheets:\r\n\t\t\t#Rename('group',str(k),sheet)\r\n\t\r\n# SCORE IMAGES\r\nif runScoreImages:\r\n\tsortedItemsScore = [x for y, x in sorted(zip(scores,items))]\r\n\tsortedScores = sorted(scores)\r\n\tscoreItems = []\r\n\tscoreKeys = []\r\n\tfor k, group in groupby(zip(sortedScores, sortedItemsScore), itemgetter(0)):\r\n\t\tscoreItems.append([])\r\n\t\tscoreKeys.append(k)\r\n\t\tfor g in group:\r\n\t\t\tscoreItems[-1].append(g[1])\r\n\t\t\t\r\n\tfor k, g in zip(scoreKeys, scoreItems):\r\n\t\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\t\tfor view in views:\r\n\t\t\tHideElements(view,items)\r\n\t\t\tUnhideElements(view, g)\r\n\t\tfor sheet in sheets:\r\n\t\t\tparam = sheet.get_Parameter(guid)\r\n\t\t\tparam.Set('Score: ' + str(k))\r\n\t\tiOpt.FilePath = imagePath + '\\\\Score_' + str(k*100)\t\t\r\n\t\tdoc.Regenerate() # just calling uidoc.RefreshActiveView() didn't do the trick\r\n\t\tdoc.ExportImage(iOpt)\r\n\t\tTransactionManager.Instance.TransactionTaskDone()\r\n\t\t#for sheet in sheets:\r\n\t\t#\tRename('score',str(k*100),sheet)\r\n\r\n# Ensure all placed items are hidden and unplaced items are unhidden\r\nfor v in views: \r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tHideElements(v,items)\r\n\tUnhideElements(v,unplacedItems)\r\n\tdoc.Regenerate()\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\t\r\n# Export Initial Image\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfor sheet in sheets:\r\n\tparam = sheet.get_Parameter(guid)\r\n\tparam.Set('')\r\ndoc.Regenerate()\r\niOpt.FilePath = imagePath + '\\\\0'\r\ndoc.ExportImage(iOpt)\r\nTransactionManager.Instance.TransactionTaskDone()\r\nfor sheet in sheets:\r\n\tRename('item','0',sheet)\r\n\t\r\n# Sort items by sequence\r\nsortedItems = [x for y, x in sorted(zip(sequence,items))]\r\n\r\n# Loop through items in order\r\nout = []\r\nids = []\r\ntotal = len(sortedItems)\r\ncount = 1\r\nfor item in sortedItems:\r\n\tbookId = int(item.Name.split(\" \")[1]) # Get id from unplaced item name\r\n\tunplacedItem = unplacedItems[unplacedItemsIds.index(bookId)] # Get unplaced item\r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tfor view in views:\r\n\t\tUnhideElement(view, item)\r\n\t\tHideElement(view, unplacedItem)\r\n\tiOpt.FilePath = imagePath + '\\\\' + str(count)\r\n\tfor sheet in sheets:\r\n\t\tparam = sheet.get_Parameter(guid)\r\n\t\tparam.Set('Book ' + str(count) + ' / ' + str(total))\t\t\r\n\tdoc.Regenerate() # just calling uidoc.RefreshActiveView() didn't do the trick\r\n\tdoc.ExportImage(iOpt)\r\n\tfor sheet in sheets:\r\n\t\tRename('item',str(count),sheet)\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\tout.append(item)\r\n\tcount = count + 1\r\n\r\n# Ensure all items are unhidden\r\nfor v in views: \r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tUnhideElements(v,items)\r\n\tUnhideElements(v,unplacedItems)\r\n\tdoc.Regenerate()\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\r\n# Assign your output to the OUT variable.\r\nOUT = out, ids\r\n",
       "VariableInputPorts": true,
       "Id": "f8d798ac18a54eaf8f606081b80c4414",
       "Inputs": [
@@ -8359,9 +8364,9 @@
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
       "InputValue": {
-        "R": 173,
-        "G": 255,
-        "B": 47,
+        "R": 255,
+        "G": 215,
+        "B": 0,
         "A": 255
       },
       "NodeType": "ColorInputNode",
@@ -8413,6 +8418,15 @@
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
+        },
+        {
+          "Id": "6a1c417d3b1a4714801b046c029773a9",
+          "Name": "item3",
+          "Description": "Item Index #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
         }
       ],
       "Outputs": [
@@ -8432,9 +8446,9 @@
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
       "InputValue": {
-        "R": 255,
+        "R": 0,
         "G": 0,
-        "B": 0,
+        "B": 128,
         "A": 255
       },
       "NodeType": "ColorInputNode",
@@ -8719,9 +8733,9 @@
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
       "InputValue": {
-        "R": 255,
-        "G": 215,
-        "B": 0,
+        "R": 34,
+        "G": 139,
+        "B": 34,
         "A": 255
       },
       "NodeType": "ColorInputNode",
@@ -8740,6 +8754,362 @@
       ],
       "Replication": "Disabled",
       "Description": "Select a Color from the palette"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "43629155-311e-4c61-b15f-5c14be2e02c3",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "0af59923c5c547d48897663a9e43247c",
+      "Inputs": [
+        {
+          "Id": "39a5c8778b9f47c0aaf4096ef8e8f042",
+          "Name": "geometry",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ba8a26dcd7bb41b2a57c4ae9e5adeef0",
+          "Name": "category",
+          "Description": "var[]\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "96597863b40846ffbc681983c7d33c5e",
+          "Name": "name",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ad65feeceb9e444fa989ac6e861b4b9e",
+          "Name": "material",
+          "Description": "var[]\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "dc057854775d4e8485c94c96464935ba",
+          "Name": "DirectShape",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Convert the input geometry to DirectShape element inside the Revit document.  Works only in Revit 2017 and later. Usies the more advanced BrepBuilder. It supports solids or surfaces, however periodic faces like spheres, cylinders and cones are not supported. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category and material for all geometries or a unique one for each geometry - the node's lacing is set to longest by default. The default category is Generic Model."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Container_\" + c;",
+      "Id": "d2a04e30de914836afd7fbeebcefb96c",
+      "Inputs": [
+        {
+          "Id": "351ae45dcb374caab2d41c3adca78754",
+          "Name": "c",
+          "Description": "c",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4f88fe09a89c46c393ee01006366258a",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "id",
+      "Id": "1bdfb416f72e4ca698769758854217c4",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f261553661b94eee8d41a1c0fe204079",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DesignScript.Builtin.Dictionary.ValueAtKey@string",
+      "Id": "43010756d7984137ae72cc73a89370e6",
+      "Inputs": [
+        {
+          "Id": "d0d82dcff47d44ffa19316f276d2d2cf",
+          "Name": "dictionary",
+          "Description": "DesignScript.Builtin.Dictionary",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0ec9519e8ab2440f98a5e9d9c1f4354a",
+          "Name": "key",
+          "Description": "The key in the Dictionary to obtain.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f46287ecd5c94a7187a65fd522bc6e9e",
+          "Name": "value",
+          "Description": "The value at the specified key or null if it is not set.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Obtain the value at a specified key\n\nDictionary.ValueAtKey (key: string): var[]..[]"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "Default",
+      "Id": "a878366f87c74c31b8c6cc29b714487b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fa2510b7069340cc9e7eabda8ada5193",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Material.ByName@string",
+      "Id": "4398d7eb8391474d91b5de91c47dea6f",
+      "Inputs": [
+        {
+          "Id": "a2e95797c82648f1b778833c50b86507",
+          "Name": "name",
+          "Description": "The name of the material\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3b1cd2fde5f84a6f94f84c8fd2a2e68c",
+          "Name": "Material",
+          "Description": "Material",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Select a material from the current document by the name\n\nMaterial.ByName (name: string): Material"
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.Categories, DSRevitNodesUI",
+      "SelectedIndex": 230,
+      "NodeType": "ExtensionNode",
+      "Id": "f7e9b3d8535247bdaed280adf1acf20d",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0f81e579207b4e90aca0ab46adccdbc3",
+          "Name": "Category",
+          "Description": "The selected Category.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "All built-in categories."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Enable Python support and load DesignScript library\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n# Import DocumentManager and TransactionManager\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\n# Import Element wrapper extension methods\r\nimport clr\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\n# Import RevitAPI\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\nimport System\r\nfrom System.Collections.Generic import *\r\n\r\nitems = UnwrapElement(IN[0])\r\nviews = UnwrapElement(IN[1])\r\nfillColours = UnwrapElement(IN[2])\r\nlineColour = UnwrapElement(IN[3])\r\npattern = UnwrapElement(IN[4])\r\n\r\nogs = OverrideGraphicSettings()\r\nogs.SetProjectionLineColor(Color(lineColour.Red, lineColour.Green, lineColour.Blue))\r\nogs.SetProjectionFillPatternId(pattern.Id)\r\n\r\nfor i, c in zip(items, fillColours):\r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\togs.SetProjectionFillColor(Color(c.Red, c.Green, c.Blue))\r\n\tfor view in views:\r\n\t\tview.SetElementOverrides(i.Id, ogs)\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\r\n# Assign your output to the OUT variable.\r\nOUT = items",
+      "VariableInputPorts": true,
+      "Id": "6f9e586e069c424fb632ea1192f74f6c",
+      "Inputs": [
+        {
+          "Id": "56299a7750074e8e838356c4c960c8a4",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bfba8e50cedf4f22a0c931f2af6bd04c",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ada888cf755e43ee8acaccb1fa9ca3f8",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "366120c0181a4b0d9abd6ce8675e8522",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c7736bf535e240348e5e7347594b478f",
+          "Name": "IN[4]",
+          "Description": "Input #4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8c3af8ee5f2644df99adbfd7c2857343",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
+      "InputValue": {
+        "R": 128,
+        "G": 0,
+        "B": 128,
+        "A": 255
+      },
+      "NodeType": "ColorInputNode",
+      "Id": "7bc198b85aa3436693e3f9c531fc8656",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "7a1fc9adbefd4beab3a057b2396b3eda",
+          "Name": "Color",
+          "Description": "Selected Color.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a Color from the palette"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.ColorRange, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "a80bce5266fb42d186cb21adf23b8f60",
+      "Inputs": [
+        {
+          "Id": "0ce218df8ce74502ab3e96d17a2c26fe",
+          "Name": "colors",
+          "Description": "A list of colors to include in the range.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5627a54f6aa64fc98c8da023e8b32637",
+          "Name": "indices",
+          "Description": "A list of values between 0.0 and 1.0 which position the input colors along the range.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "615c4d5826784cf2aa10f8d203db1786",
+          "Name": "value",
+          "Description": "A list of values between 0.0 and 1.0. These values are used to look up the color within the range.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "15c15e29874b413fb2b3b444d822e680",
+          "Name": "color",
+          "Description": "The selected colors.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Get a color given a color range."
     }
   ],
   "Connectors": [
@@ -8979,6 +9349,11 @@
       "Id": "728edb8f3c71424da1fe824e4c9840be"
     },
     {
+      "Start": "f88793734fb445d7a4d2e28cac0e73e9",
+      "End": "39a5c8778b9f47c0aaf4096ef8e8f042",
+      "Id": "a8c22e20c99f49a0bb93271f8e0e1811"
+    },
+    {
       "Start": "54128aa1682944d09269deb3437ffa15",
       "End": "010d98346ff0494ea2498e24cd95f019",
       "Id": "8f65c77b6a0341f8849885c64f9b32e5"
@@ -9017,6 +9392,11 @@
       "Start": "54128aa1682944d09269deb3437ffa15",
       "End": "ca67c72b858443e9a047a185a4b979b6",
       "Id": "8502f21cfcf54effbfc2ba851a67e1d9"
+    },
+    {
+      "Start": "54128aa1682944d09269deb3437ffa15",
+      "End": "d0d82dcff47d44ffa19316f276d2d2cf",
+      "Id": "5de8394d26744c14b1caa7a78f4b27f8"
     },
     {
       "Start": "31a765336e064a9dbc9fc6df3bfe8214",
@@ -9289,6 +9669,11 @@
       "Id": "e5eeb2f2f7034c7790a12ebe4cbc038e"
     },
     {
+      "Start": "d14d460b08c4400e865839cdff8ab19b",
+      "End": "ada888cf755e43ee8acaccb1fa9ca3f8",
+      "Id": "4187dcb192d64bbfb244434e35901c4b"
+    },
+    {
       "Start": "7c2631e5c14b484cac10a0854520549b",
       "End": "44b22e486a6e4a50b54e9a4444e44d9c",
       "Id": "1a3e63959821480a8bb98e9c2e80ee2c"
@@ -9384,6 +9769,11 @@
       "Id": "c2174d73d21d418ca7017da3c4613a0f"
     },
     {
+      "Start": "fc15f4bbfd7e47c091e5ca9f15c7bacd",
+      "End": "0ce218df8ce74502ab3e96d17a2c26fe",
+      "Id": "7b1a640e255f4be582be6c873a29720b"
+    },
+    {
       "Start": "429058e6c536490faf5233cf49d345c7",
       "End": "03757903d2a9450d963f9a58647d77aa",
       "Id": "1e0a759edd1443feb4985b0202e71f90"
@@ -9397,6 +9787,11 @@
       "Start": "8540f2ff0c09448fae69b7b41f014c55",
       "End": "9d73b67347f94ad69eb581a497286a97",
       "Id": "10379ed04f6943288e3c74b2ef45f769"
+    },
+    {
+      "Start": "8540f2ff0c09448fae69b7b41f014c55",
+      "End": "5627a54f6aa64fc98c8da023e8b32637",
+      "Id": "652f8065ee7f41fb874eeab8b8f79e46"
     },
     {
       "Start": "61c167e64ac9426bbc6573fe10d5a331",
@@ -9529,6 +9924,11 @@
       "Id": "ae2a8573fffc40f7a402fc5b0d4ad03a"
     },
     {
+      "Start": "f0bb71a0ff2041a7bf60aa941608a5aa",
+      "End": "366120c0181a4b0d9abd6ce8675e8522",
+      "Id": "33d20921e61645019fb7779e776281e0"
+    },
+    {
       "Start": "d22d28a639bb4759bcefd24afa340bd9",
       "End": "1c41e10264164711b5db868c7a395924",
       "Id": "9c6250f092584deaba9bd97566edd4e6"
@@ -9537,6 +9937,11 @@
       "Start": "d22d28a639bb4759bcefd24afa340bd9",
       "End": "ecf6a610152a40fab6ec94b6f1161b5c",
       "Id": "af42bc4c7f9b47cfa76482a9e6aa39cf"
+    },
+    {
+      "Start": "d22d28a639bb4759bcefd24afa340bd9",
+      "End": "c7736bf535e240348e5e7347594b478f",
+      "Id": "24d4c647beee4ddfac4ad43b5e9d2918"
     },
     {
       "Start": "5dedc3dadb894e84bdd3257ba9cf928e",
@@ -9839,6 +10244,11 @@
       "Id": "b46e3bf4fb9d400fa7af72d43884978f"
     },
     {
+      "Start": "332406464cb84a36a4c18c1aeba3196e",
+      "End": "615c4d5826784cf2aa10f8d203db1786",
+      "Id": "a79230f527a1418cb4d5a3981d4f7520"
+    },
+    {
       "Start": "b9a0b04e9e684711b5f359854548960c",
       "End": "5a56d80c53684fd18cb1946bc75e72e5",
       "Id": "579a2d70978248a4a985ef36fd5462a4"
@@ -9872,11 +10282,6 @@
       "Start": "54bdc88b51cb4fd9a9b9751e18138193",
       "End": "5b7e7ef2cdaa4d1b91501839c82c4fa9",
       "Id": "0497fe5e20c04b5e939cb4d97e705efc"
-    },
-    {
-      "Start": "b56b4b868e9743ccb8641e42dc8e3440",
-      "End": "9fc77fff91a34706a2845dd304dd91f0",
-      "Id": "5c733238bc7147beb559a5815e203074"
     },
     {
       "Start": "63dcfd70480e4a1ab07dbac4699070e4",
@@ -10052,6 +10457,11 @@
       "Start": "4b29afeab3ce442bb6d7bf1b64281fdb",
       "End": "edc322369e8d4030979fdc86091bcf43",
       "Id": "77796a55a4a147c2a748488723971a3b"
+    },
+    {
+      "Start": "4b29afeab3ce442bb6d7bf1b64281fdb",
+      "End": "bfba8e50cedf4f22a0c931f2af6bd04c",
+      "Id": "fc71730cc0f349a3b8750c3ccc215f17"
     },
     {
       "Start": "f355daad67be44588849b9e36c3dde4c",
@@ -10457,6 +10867,51 @@
       "Start": "965fe6a0592b4d13a8049350f1101b7f",
       "End": "d9c6f97830f84986afd3b497377c4e29",
       "Id": "8837ed2bf1f2458481b6b7e2adfdf0b8"
+    },
+    {
+      "Start": "dc057854775d4e8485c94c96464935ba",
+      "End": "56299a7750074e8e838356c4c960c8a4",
+      "Id": "d7b4f627d50448ff89413c73fb4ffeb6"
+    },
+    {
+      "Start": "4f88fe09a89c46c393ee01006366258a",
+      "End": "96597863b40846ffbc681983c7d33c5e",
+      "Id": "6ecd150a97814599be7cc243ecde3589"
+    },
+    {
+      "Start": "f261553661b94eee8d41a1c0fe204079",
+      "End": "0ec9519e8ab2440f98a5e9d9c1f4354a",
+      "Id": "b5cb5e6ed8354ffbbac16256622cf353"
+    },
+    {
+      "Start": "f46287ecd5c94a7187a65fd522bc6e9e",
+      "End": "351ae45dcb374caab2d41c3adca78754",
+      "Id": "c51ad149bce84cb98cc8c54110d63a9d"
+    },
+    {
+      "Start": "fa2510b7069340cc9e7eabda8ada5193",
+      "End": "a2e95797c82648f1b778833c50b86507",
+      "Id": "099f4e7c64b3447eaee6e2d07944b161"
+    },
+    {
+      "Start": "3b1cd2fde5f84a6f94f84c8fd2a2e68c",
+      "End": "ad65feeceb9e444fa989ac6e861b4b9e",
+      "Id": "fb622278768d49aba38672656dacbb7e"
+    },
+    {
+      "Start": "0f81e579207b4e90aca0ab46adccdbc3",
+      "End": "ba8a26dcd7bb41b2a57c4ae9e5adeef0",
+      "Id": "2b697990afb245169ffd971171385edc"
+    },
+    {
+      "Start": "7a1fc9adbefd4beab3a057b2396b3eda",
+      "End": "6a1c417d3b1a4714801b046c029773a9",
+      "Id": "b3c68f2a70af47bf89c95ab11979b591"
+    },
+    {
+      "Start": "15c15e29874b413fb2b3b444d822e680",
+      "End": "9fc77fff91a34706a2845dd304dd91f0",
+      "Id": "9365a1bb14f4447995db02e6c1ac7c3d"
     }
   ],
   "Dependencies": [
@@ -10468,21 +10923,21 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.3.8810",
+      "Version": "2.0.2.6826",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": 989.54113196472224,
-      "EyeY": 2849.5485437495654,
-      "EyeZ": 1137.1507570808767,
-      "LookX": 677.83987337162159,
-      "LookY": -1380.3955558517121,
-      "LookZ": -3506.9932366575831,
-      "UpX": 0.028868473780232332,
-      "UpY": 0.9883615104678084,
-      "UpZ": -0.14935908357877339
+      "EyeX": -117.22375142112014,
+      "EyeY": 4195.1987137223859,
+      "EyeZ": 4091.7789553715056,
+      "LookX": 1784.604756757464,
+      "LookY": -2726.0457258245324,
+      "LookZ": -6461.6214349482116,
+      "UpX": 0.045083971847665362,
+      "UpY": 0.98555605905812571,
+      "UpZ": -0.16323813873098122
     },
     "NodeViews": [
       {
@@ -11622,7 +12077,7 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 14194.505767860723,
+        "X": 14191.830647734045,
         "Y": 2839.7772421396703
       },
       {
@@ -12012,7 +12467,7 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 12510.984671696951,
+        "X": 12528.119114682717,
         "Y": 2711.0548162368523
       },
       {
@@ -12062,8 +12517,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 11909.381700600161,
-        "Y": 3398.1340298314717
+        "X": 11909.108301007025,
+        "Y": 3562.6357295260573
       },
       {
         "ShowGeometry": true,
@@ -12362,8 +12817,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 15212.97646362424,
-        "Y": 2582.3292012871752
+        "X": 15371.860091962357,
+        "Y": 2581.9576388009459
       },
       {
         "ShowGeometry": true,
@@ -12681,9 +13136,9 @@
         "Id": "f8d798ac18a54eaf8f606081b80c4414",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Excluded": false,
+        "Excluded": true,
         "X": 16631.30743540201,
-        "Y": 2050.4949457222742
+        "Y": 2051.6709577473021
       },
       {
         "ShowGeometry": true,
@@ -12924,6 +13379,106 @@
         "Excluded": false,
         "X": 6400.0208437639867,
         "Y": 147.68549381866148
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Springs.BrepShape.ByGeometry",
+        "Id": "0af59923c5c547d48897663a9e43247c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 13998.474857578969,
+        "Y": 800.30682439224574
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "d2a04e30de914836afd7fbeebcefb96c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 13661.723213817388,
+        "Y": 980.44784394003727
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "1bdfb416f72e4ca698769758854217c4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 13315.091804006679,
+        "Y": 1034.7096772360092
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Dictionary.ValueAtKey",
+        "Id": "43010756d7984137ae72cc73a89370e6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 13421.399882975213,
+        "Y": 977.0024953533499
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "a878366f87c74c31b8c6cc29b714487b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 13543.383190112485,
+        "Y": 1110.9532479694758
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Material.ByName",
+        "Id": "4398d7eb8391474d91b5de91c47dea6f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 13649.366651457543,
+        "Y": 1109.2443557006056
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Categories",
+        "Id": "f7e9b3d8535247bdaed280adf1acf20d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 13668.159574137911,
+        "Y": 874.11314885794582
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Override Containers",
+        "Id": "6f9e586e069c424fb632ea1192f74f6c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 15376.738413652636,
+        "Y": 1945.8664397943699
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Color Palette",
+        "Id": "7bc198b85aa3436693e3f9c531fc8656",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 6400.6648704377931,
+        "Y": 353.25728563040559
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Color Range",
+        "Id": "a80bce5266fb42d186cb21adf23b8f60",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 11736.747814704906,
+        "Y": 3406.2024716861056
       }
     ],
     "Annotations": [
@@ -12954,7 +13509,7 @@
         "Left": -1767.7157644879771,
         "Top": -437.57710187714213,
         "Width": 431.26005660594092,
-        "Height": 170.46817437871698,
+        "Height": 169.96817437871698,
         "FontSize": 48.0,
         "InitialTop": -312.57710187714213,
         "InitialHeight": 140.96817437871698,
@@ -12971,7 +13526,7 @@
         "Left": -1769.4558497065111,
         "Top": -691.12151679336921,
         "Width": 2422.6108926995767,
-        "Height": 217.5,
+        "Height": 218.0,
         "FontSize": 96.0,
         "InitialTop": -566.12151679336921,
         "InitialHeight": 152.16106649098788,
@@ -12988,7 +13543,7 @@
         "Left": -1767.7157644879771,
         "Top": -234.52788992099119,
         "Width": 1057.819394467549,
-        "Height": 170.83754722605642,
+        "Height": 170.33754722605642,
         "FontSize": 96.0,
         "InitialTop": -109.52788992099119,
         "InitialHeight": 141.33754722605642,
@@ -13002,13 +13557,13 @@
           "4c913f5ca236496a9b1968f45588cadd"
         ],
         "Left": -1765.4019831422495,
-        "Top": 7.0105685612654725,
-        "Width": 488.0,
-        "Height": 277.5,
+        "Top": -49.989431438734528,
+        "Width": 300.0,
+        "Height": 334.0,
         "FontSize": 48.0,
         "InitialTop": 190.01056856126547,
         "InitialHeight": 145.0,
-        "TextblockHeight": 173.0,
+        "TextblockHeight": 230.0,
         "Background": "#FFFFB8D8"
       },
       {
@@ -13028,7 +13583,7 @@
         ],
         "Left": 1258.032229568385,
         "Top": -14.978163128384267,
-        "Width": 1742.1224631267823,
+        "Width": 1742.6224631267823,
         "Height": 609.95284742120043,
         "FontSize": 48.0,
         "InitialTop": 110.02183687161573,
@@ -13051,7 +13606,7 @@
         ],
         "Left": 4749.2969412944994,
         "Top": -13.400702041899194,
-        "Width": 1013.1479613365664,
+        "Width": 1012.6479613365664,
         "Height": 472.04117860886981,
         "FontSize": 48.0,
         "InitialTop": 111.59929795810081,
@@ -13080,7 +13635,7 @@
         ],
         "Left": 5242.886209994369,
         "Top": 491.03093587380476,
-        "Width": 1467.2877893579443,
+        "Width": 1466.7877893579443,
         "Height": 759.36902602548025,
         "FontSize": 48.0,
         "InitialTop": 616.03093587380476,
@@ -13107,7 +13662,7 @@
         ],
         "Left": 7275.878790699715,
         "Top": 1522.9804617502316,
-        "Width": 1557.9895924026496,
+        "Width": 1557.4895924026496,
         "Height": 798.7207375541027,
         "FontSize": 48.0,
         "InitialTop": 1647.9804617502316,
@@ -13123,7 +13678,7 @@
         ],
         "Left": 6410.2637913179951,
         "Top": 1589.1827885806836,
-        "Width": 240.5,
+        "Width": 240.0,
         "Height": 302.0,
         "FontSize": 48.0,
         "InitialTop": 1772.1827885806836,
@@ -13141,7 +13696,7 @@
         ],
         "Left": 5728.5171687742713,
         "Top": 1517.2880207570197,
-        "Width": 555.36353914938445,
+        "Width": 555.86353914938445,
         "Height": 538.43027460000053,
         "FontSize": 48.0,
         "InitialTop": 1700.2880207570197,
@@ -13157,13 +13712,13 @@
           "16910aed50284fa4bab0b1bc7f2611de"
         ],
         "Left": 6697.1545004852,
-        "Top": 1977.565089391629,
-        "Width": 427.10040109863621,
-        "Height": 416.59001102488583,
+        "Top": 1978.065089391629,
+        "Width": 426.60040109863621,
+        "Height": 416.09001102488583,
         "FontSize": 48.0,
         "InitialTop": 2218.065089391629,
         "InitialHeight": 228.09001102488583,
-        "TextblockHeight": 230.5,
+        "TextblockHeight": 230.0,
         "Background": "#FFD8D8D8"
       },
       {
@@ -13174,7 +13729,7 @@
         ],
         "Left": 4375.9303499796733,
         "Top": 1560.3567758750785,
-        "Width": 237.5,
+        "Width": 238.0,
         "Height": 218.0,
         "FontSize": 48.0,
         "InitialTop": 1685.3567758750785,
@@ -13193,8 +13748,8 @@
         ],
         "Left": 4784.8314366921113,
         "Top": 1559.349126264611,
-        "Width": 779.91658769568858,
-        "Height": 490.599078366482,
+        "Width": 778.91658769568858,
+        "Height": 490.099078366482,
         "FontSize": 48.0,
         "InitialTop": 1684.349126264611,
         "InitialHeight": 215.099078366482,
@@ -13211,7 +13766,7 @@
         "Left": -645.14260453132374,
         "Top": -237.24739334240854,
         "Width": 4354.6717775556253,
-        "Height": 171.12942453918157,
+        "Height": 170.62942453918157,
         "FontSize": 96.0,
         "InitialTop": -112.24739334240854,
         "InitialHeight": 141.62942453918157,
@@ -13227,7 +13782,7 @@
         ],
         "Left": 3925.5679965027375,
         "Top": 1560.89779326629,
-        "Width": 417.53857680009605,
+        "Width": 417.03857680009605,
         "Height": 277.53415882460467,
         "FontSize": 48.0,
         "InitialTop": 1685.89779326629,
@@ -13245,7 +13800,7 @@
         ],
         "Left": -636.24015916938879,
         "Top": 148.84352733970036,
-        "Width": 735.25915527919551,
+        "Width": 735.75915527919551,
         "Height": 287.98413303129053,
         "FontSize": 48.0,
         "InitialTop": 273.84352733970036,
@@ -13263,7 +13818,7 @@
         ],
         "Left": 3938.4606164617762,
         "Top": 673.59421355837458,
-        "Width": 745.24700588183987,
+        "Width": 745.74700588183987,
         "Height": 309.18117322079047,
         "FontSize": 48.0,
         "InitialTop": 798.59421355837458,
@@ -13281,7 +13836,7 @@
         "Left": 3921.6522288104443,
         "Top": -234.10798116163767,
         "Width": 4723.3318662889305,
-        "Height": 173.49621785622287,
+        "Height": 172.99621785622287,
         "FontSize": 96.0,
         "InitialTop": -109.10798116163767,
         "InitialHeight": 143.99621785622287,
@@ -13298,7 +13853,7 @@
         "Left": 3917.7014044877924,
         "Top": 1292.751316017527,
         "Width": 4916.3360192039218,
-        "Height": 170.84805414521406,
+        "Height": 170.34805414521406,
         "FontSize": 96.0,
         "InitialTop": 1417.751316017527,
         "InitialHeight": 141.34805414521406,
@@ -13340,13 +13895,13 @@
           "c3fd203b9ef2417f8934ff4bcd4cc21d"
         ],
         "Left": 10806.01543238313,
-        "Top": 2046.9244471339907,
-        "Width": 1241.0157388790376,
-        "Height": 618.86948029603991,
+        "Top": 2046.4244471339907,
+        "Width": 1240.5157388790376,
+        "Height": 619.36948029603991,
         "FontSize": 48.0,
         "InitialTop": 2114.4244471339907,
         "InitialHeight": 603.36948029603991,
-        "TextblockHeight": 57.5,
+        "TextblockHeight": 58.0,
         "Background": "#FFD8D8D8"
       },
       {
@@ -13376,7 +13931,7 @@
         "Left": 8933.4168925380181,
         "Top": 1290.4439515812148,
         "Width": 4258.0322775484638,
-        "Height": 174.86412065145669,
+        "Height": 174.36412065145669,
         "FontSize": 96.0,
         "InitialTop": 1415.4439515812148,
         "InitialHeight": 145.36412065145669,
@@ -13392,7 +13947,7 @@
         ],
         "Left": 8950.0827686103567,
         "Top": 2228.2822201686085,
-        "Width": 353.08917472130656,
+        "Width": 352.58917472130656,
         "Height": 258.20828540455113,
         "FontSize": 48.0,
         "InitialTop": 2353.2822201686085,
@@ -13409,7 +13964,7 @@
         ],
         "Left": 8943.4358690268709,
         "Top": 2509.6260298873085,
-        "Width": 619.25658427186136,
+        "Width": 618.25658427186136,
         "Height": 173.03432804245585,
         "FontSize": 36.0,
         "InitialTop": 2562.6260298873085,
@@ -13431,13 +13986,13 @@
           "b59eb023bf034f238b819ba86f53fe65"
         ],
         "Left": 10805.008237337679,
-        "Top": 2681.7354810218221,
-        "Width": 1241.5012987157334,
-        "Height": 414.36129321545559,
+        "Top": 2681.2354810218221,
+        "Width": 1241.0012987157334,
+        "Height": 414.86129321545559,
         "FontSize": 48.0,
         "InitialTop": 2749.2354810218221,
         "InitialHeight": 346.86129321545559,
-        "TextblockHeight": 57.5,
+        "TextblockHeight": 58.0,
         "Background": "#FFD8D8D8"
       },
       {
@@ -13454,13 +14009,13 @@
           "cd80ffe73ce349f4bc63f61bac124dd8"
         ],
         "Left": 10804.297611128368,
-        "Top": 3124.4093825988239,
-        "Width": 1239.584089471793,
-        "Height": 366.72464723264784,
+        "Top": 3123.9093825988239,
+        "Width": 1238.8106898786573,
+        "Height": 531.72634692723341,
         "FontSize": 48.0,
         "InitialTop": 3191.9093825988239,
-        "InitialHeight": 376.85687668573519,
-        "TextblockHeight": 57.5,
+        "InitialHeight": 541.35857638032076,
+        "TextblockHeight": 58.0,
         "Background": "#FFD8D8D8"
       },
       {
@@ -13474,7 +14029,7 @@
         ],
         "Left": 12297.854112948537,
         "Top": 2296.7438677763103,
-        "Width": 403.13055874841484,
+        "Width": 419.26500173418026,
         "Height": 533.310948460542,
         "FontSize": 48.0,
         "InitialTop": 2421.7438677763103,
@@ -13534,7 +14089,7 @@
         ],
         "Left": 14543.667884624705,
         "Top": 2630.5423528781962,
-        "Width": 196.32642906859292,
+        "Width": 195.82642906859292,
         "Height": 373.55231686831803,
         "FontSize": 48.0,
         "InitialTop": 2813.5423528781962,
@@ -13568,13 +14123,13 @@
           "90e695c6173148f6bcab1d1007d0a1bc"
         ],
         "Left": 14176.121447453726,
-        "Top": 1575.7363089492567,
-        "Width": 278.88432040699627,
-        "Height": 1435.0409331904136,
+        "Top": 1576.2363089492567,
+        "Width": 276.70920028031833,
+        "Height": 1434.5409331904136,
         "FontSize": 48.0,
         "InitialTop": 1816.2363089492567,
         "InitialHeight": 1168.5409331904136,
-        "TextblockHeight": 230.5,
+        "TextblockHeight": 230.0,
         "Background": "#FFA4E1FF"
       },
       {
@@ -13587,7 +14142,7 @@
         "Left": 13307.063120051469,
         "Top": 1292.2616553637952,
         "Width": 2373.6228713405962,
-        "Height": 170.79567001144528,
+        "Height": 170.29567001144528,
         "FontSize": 96.0,
         "InitialTop": 1417.2616553637952,
         "InitialHeight": 141.29567001144528,
@@ -13612,13 +14167,13 @@
           "6e546d0b9c834db0af70112e42af911a"
         ],
         "Left": 514.02497717385631,
-        "Top": 653.89937809898754,
+        "Top": 653.39937809898754,
         "Width": 2489.8724472735557,
-        "Height": 345.03324355298992,
+        "Height": 345.53324355298992,
         "FontSize": 48.0,
         "InitialTop": 721.39937809898754,
         "InitialHeight": 329.53324355298992,
-        "TextblockHeight": 57.5,
+        "TextblockHeight": 58.0,
         "Background": "#FFD8D8D8"
       },
       {
@@ -13632,8 +14187,8 @@
         ],
         "Left": 5397.0609820368127,
         "Top": 2650.62023311297,
-        "Width": 773.139827214015,
-        "Height": 402.59907836648017,
+        "Width": 772.639827214015,
+        "Height": 403.09907836648017,
         "FontSize": 48.0,
         "InitialTop": 2775.62023311297,
         "InitialHeight": 215.09907836648017,
@@ -13650,7 +14205,7 @@
         ],
         "Left": 6545.5287965309562,
         "Top": 2546.7563375198479,
-        "Width": 396.75565722304054,
+        "Width": 397.25565722304054,
         "Height": 510.37776161096917,
         "FontSize": 48.0,
         "InitialTop": 2729.7563375198479,
@@ -13666,7 +14221,7 @@
         ],
         "Left": 7244.9343819144433,
         "Top": 2836.6061099186809,
-        "Width": 240.5,
+        "Width": 240.0,
         "Height": 302.0,
         "FontSize": 48.0,
         "InitialTop": 3019.6061099186809,
@@ -13699,7 +14254,7 @@
         ],
         "Left": 3451.0699713266986,
         "Top": 2659.4874505038024,
-        "Width": 457.49100873304815,
+        "Width": 456.99100873304815,
         "Height": 287.30148416964039,
         "FontSize": 48.0,
         "InitialTop": 2784.4874505038024,
@@ -13715,7 +14270,7 @@
         ],
         "Left": 3929.9547638593158,
         "Top": 2658.8643572493756,
-        "Width": 237.5,
+        "Width": 238.0,
         "Height": 218.0,
         "FontSize": 48.0,
         "InitialTop": 2783.8643572493756,
@@ -13768,7 +14323,7 @@
         ],
         "Left": 9629.3887931410172,
         "Top": 2333.0778251623378,
-        "Width": 912.830861377377,
+        "Width": 911.830861377377,
         "Height": 402.68682354693919,
         "FontSize": 36.0,
         "InitialTop": 2386.0778251623378,
@@ -13785,8 +14340,8 @@
         ],
         "Left": 8947.0843776759921,
         "Top": 2716.7231166012034,
-        "Width": 619.25658427185954,
-        "Height": 173.56542917047045,
+        "Width": 618.25658427185954,
+        "Height": 175.06542917047045,
         "FontSize": 36.0,
         "InitialTop": 2769.7231166012034,
         "InitialHeight": 146.06542917047045,
@@ -13801,13 +14356,13 @@
           "4d1e12dbbaa342d6a72fbe91b6eaf76d"
         ],
         "Left": -1758.5990679575043,
-        "Top": 309.00801647518949,
-        "Width": 278.81369931319909,
-        "Height": 374.41069110513467,
+        "Top": 309.50801647518949,
+        "Width": 278.31369931319909,
+        "Height": 373.91069110513467,
         "FontSize": 48.0,
         "InitialTop": 549.50801647518949,
         "InitialHeight": 210.91069110513467,
-        "TextblockHeight": 230.5,
+        "TextblockHeight": 230.0,
         "Background": "#FFFFB8D8"
       },
       {
@@ -13818,13 +14373,13 @@
           "391c0b3a40084253ae5013f1540e0782"
         ],
         "Left": -635.06667742701393,
-        "Top": 1244.5549584981247,
-        "Width": 292.56165851199967,
-        "Height": 475.7460862740129,
+        "Top": 1245.0549584981247,
+        "Width": 292.06165851199967,
+        "Height": 475.2460862740129,
         "FontSize": 48.0,
         "InitialTop": 1485.0549584981247,
         "InitialHeight": 261.2460862740129,
-        "TextblockHeight": 230.5,
+        "TextblockHeight": 230.0,
         "Background": "#FFD8D8D8"
       },
       {
@@ -13854,7 +14409,7 @@
         ],
         "Left": 4652.1949855326893,
         "Top": 2650.0899084383727,
-        "Width": 678.10452082403845,
+        "Width": 677.60452082403845,
         "Height": 346.24656022173804,
         "FontSize": 48.0,
         "InitialTop": 2775.0899084383727,
@@ -13882,7 +14437,7 @@
         ],
         "Left": 518.69248769260753,
         "Top": 1069.2288683200441,
-        "Width": 2257.3358389423674,
+        "Width": 2256.8358389423674,
         "Height": 628.41997287015829,
         "FontSize": 48.0,
         "InitialTop": 1194.2288683200441,
@@ -13900,7 +14455,7 @@
         "Left": 15858.426835430557,
         "Top": 1288.9402911075417,
         "Width": 1229.4690600545837,
-        "Height": 184.56598836540729,
+        "Height": 184.06598836540729,
         "FontSize": 96.0,
         "InitialTop": 1413.9402911075417,
         "InitialHeight": 155.06598836540729,
@@ -13914,15 +14469,16 @@
           "2abe7fbf9b8a4e3085f29a7927de7577",
           "b8cb6966633a4cfab06e6305a41fdd25",
           "acda57e0e62d48b4a7ffd589ebd5eb19",
+          "6f9e586e069c424fb632ea1192f74f6c",
           "a86a3f27c0b54491ab3c8d65244e021b"
         ],
-        "Left": 15202.97646362424,
-        "Top": 2059.626761679714,
-        "Width": 661.35103194564,
-        "Height": 719.7024396074612,
+        "Left": 15361.073220517943,
+        "Top": 1762.8664397943699,
+        "Width": 502.25427505193693,
+        "Height": 1016.0911990065761,
         "FontSize": 48.0,
-        "InitialTop": 2242.626761679714,
-        "InitialHeight": 484.7024396074612,
+        "InitialTop": 1945.8664397943699,
+        "InitialHeight": 781.09119900657606,
         "TextblockHeight": 173.0,
         "Background": "#FF48B9FF"
       },
@@ -13956,13 +14512,13 @@
           "ba06d4e2c79c45ad9bb0a0aa2cc0ef3d"
         ],
         "Left": 16080.14582355222,
-        "Top": 2115.1565526706572,
-        "Width": 229.7037259512413,
-        "Height": 913.7961509519605,
+        "Top": 2115.6565526706572,
+        "Width": 229.2037259512413,
+        "Height": 913.2961509519605,
         "FontSize": 48.0,
         "InitialTop": 2355.6565526706572,
         "InitialHeight": 750.2961509519605,
-        "TextblockHeight": 230.5,
+        "TextblockHeight": 230.0,
         "Background": "#FFFFB8D8"
       },
       {
@@ -13976,7 +14532,7 @@
         ],
         "Left": -635.63051673876248,
         "Top": 459.23555656392989,
-        "Width": 675.87014407493712,
+        "Width": 675.37014407493712,
         "Height": 355.54496396398144,
         "FontSize": 48.0,
         "InitialTop": 584.23555656392989,
@@ -14011,8 +14567,8 @@
         ],
         "Left": -421.26094306541637,
         "Top": 831.58266506554014,
-        "Width": 463.55709582587906,
-        "Height": 398.76844062322505,
+        "Width": 463.05709582587906,
+        "Height": 399.26844062322505,
         "FontSize": 48.0,
         "InitialTop": 956.58266506554014,
         "InitialHeight": 211.26844062322505,
@@ -14030,8 +14586,8 @@
         ],
         "Left": 13308.067437918351,
         "Top": 3247.0955217277933,
-        "Width": 710.69149796561942,
-        "Height": 494.55333325172523,
+        "Width": 709.69149796561942,
+        "Height": 495.05333325172523,
         "FontSize": 48.0,
         "InitialTop": 3430.0955217277933,
         "InitialHeight": 249.05333325172523,
@@ -14048,7 +14604,7 @@
         ],
         "Left": 5053.4097253219379,
         "Top": 3220.828352316787,
-        "Width": 678.10452082403935,
+        "Width": 677.60452082403935,
         "Height": 346.24656022173986,
         "FontSize": 48.0,
         "InitialTop": 3345.828352316787,
@@ -14083,8 +14639,8 @@
         ],
         "Left": 5824.0177111997655,
         "Top": 3221.2285484942095,
-        "Width": 773.13982721402044,
-        "Height": 402.59907836648017,
+        "Width": 772.63982721402044,
+        "Height": 403.09907836648017,
         "FontSize": 48.0,
         "InitialTop": 3346.2285484942095,
         "InitialHeight": 215.09907836648017,
@@ -14103,8 +14659,8 @@
         ],
         "Left": 7734.6715665926595,
         "Top": 2993.0864017795561,
-        "Width": 394.53412435133396,
-        "Height": 517.6732785540853,
+        "Width": 395.03412435133396,
+        "Height": 518.6732785540853,
         "FontSize": 48.0,
         "InitialTop": 3176.0864017795561,
         "InitialHeight": 377.6732785540853,
@@ -14119,7 +14675,7 @@
         ],
         "Left": 8223.916184865202,
         "Top": 3090.485826854584,
-        "Width": 240.5,
+        "Width": 240.0,
         "Height": 244.0,
         "FontSize": 48.0,
         "InitialTop": 3215.485826854584,
@@ -14136,12 +14692,12 @@
           "2a34302d40b544fbad975aaa34dd2add"
         ],
         "Left": 16621.30743540201,
-        "Top": 1925.4949457222742,
+        "Top": 1926.6709577473021,
         "Width": 456.01641823427053,
         "Height": 530.0,
         "FontSize": 48.0,
-        "InitialTop": 2050.4949457222742,
-        "InitialHeight": 202.18756604865484,
+        "InitialTop": 2051.6709577473021,
+        "InitialHeight": 201.011554023627,
         "TextblockHeight": 115.0,
         "Background": "#FF48B9FF"
       },
@@ -14153,13 +14709,13 @@
           "4a0f49d0a99b4bb3aa2cd03782189288"
         ],
         "Left": 4621.187426173452,
-        "Top": 3100.7528265965107,
+        "Top": 3101.2528265965107,
         "Width": 362.99557023652051,
-        "Height": 359.99428178876451,
+        "Height": 359.49428178876451,
         "FontSize": 48.0,
         "InitialTop": 3341.2528265965107,
         "InitialHeight": 145.49428178876451,
-        "TextblockHeight": 230.5,
+        "TextblockHeight": 230.0,
         "Background": "#FFD8D8D8"
       },
       {
@@ -14169,13 +14725,13 @@
           "675b2a3888644812987382c99cbb6e5a"
         ],
         "Left": 14086.300234038346,
-        "Top": 3190.3665822288858,
-        "Width": 289.5,
-        "Height": 385.5,
+        "Top": 3190.8665822288858,
+        "Width": 290.0,
+        "Height": 385.0,
         "FontSize": 48.0,
         "InitialTop": 3430.8665822288858,
         "InitialHeight": 145.0,
-        "TextblockHeight": 230.5,
+        "TextblockHeight": 230.0,
         "Background": "#FFD4B6DB"
       },
       {
@@ -14188,13 +14744,13 @@
           "d6bc5511be394217a1f83f5afae356d0"
         ],
         "Left": 6184.4606513607,
-        "Top": 3640.8321833333548,
+        "Top": 3641.3321833333548,
         "Width": 414.67905622221588,
-        "Height": 503.62193159372464,
+        "Height": 503.12193159372464,
         "FontSize": 48.0,
         "InitialTop": 3881.3321833333548,
         "InitialHeight": 340.12193159372464,
-        "TextblockHeight": 230.5,
+        "TextblockHeight": 230.0,
         "Background": "#FFFFB8D8"
       },
       {
@@ -14205,13 +14761,13 @@
           "2d48a63bb73044459d6b2c03a066e140"
         ],
         "Left": 7135.4795879259664,
-        "Top": 3543.107922534311,
-        "Width": 482.75492454282357,
-        "Height": 274.28299999451792,
+        "Top": 3542.607922534311,
+        "Width": 481.75492454282357,
+        "Height": 277.28299999451792,
         "FontSize": 48.0,
         "InitialTop": 3610.607922534311,
         "InitialHeight": 197.28299999451792,
-        "TextblockHeight": 57.5,
+        "TextblockHeight": 58.0,
         "Background": "#FFD8D8D8"
       },
       {
@@ -14231,13 +14787,50 @@
           "26d1f45511054b268547cd47bc9e1f89"
         ],
         "Left": 6389.6061487104926,
-        "Top": -13.686353126335348,
+        "Top": -14.186353126335348,
         "Width": 1411.1932514874024,
-        "Height": 481.67487549937027,
+        "Height": 482.17487549937027,
         "FontSize": 48.0,
         "InitialTop": 53.813646873664652,
         "InitialHeight": 466.17487549937027,
-        "TextblockHeight": 57.5,
+        "TextblockHeight": 58.0,
+        "Background": "#FFD8D8D8"
+      },
+      {
+        "Id": "85324c80b5ee4a40bd0b5bdf2883010f",
+        "Title": "Springnodes DirectShape to Revit\r\n",
+        "Nodes": [
+          "0af59923c5c547d48897663a9e43247c"
+        ],
+        "Left": 13988.474857578969,
+        "Top": 560.30682439224574,
+        "Width": 276.48666666666668,
+        "Height": 411.0,
+        "FontSize": 48.0,
+        "InitialTop": 800.30682439224574,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 230.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "9e47997b4ec14e0595e95ae7446c3982",
+        "Title": "Prepare for Revit\r\n",
+        "Nodes": [
+          "d2a04e30de914836afd7fbeebcefb96c",
+          "1bdfb416f72e4ca698769758854217c4",
+          "43010756d7984137ae72cc73a89370e6",
+          "a878366f87c74c31b8c6cc29b714487b",
+          "4398d7eb8391474d91b5de91c47dea6f",
+          "f7e9b3d8535247bdaed280adf1acf20d"
+        ],
+        "Left": 13305.091804006679,
+        "Top": 749.11314885794582,
+        "Width": 554.06777013123246,
+        "Height": 453.13120684265982,
+        "FontSize": 48.0,
+        "InitialTop": 874.11314885794582,
+        "InitialHeight": 381.84009911153,
+        "TextblockHeight": 115.0,
         "Background": "#FFD8D8D8"
       },
       {
@@ -14482,8 +15075,8 @@
         "Id": "cd80ffe73ce349f4bc63f61bac124dd8",
         "Title": "Grey for Not Placed Books (No Sequence Number",
         "Nodes": [],
-        "Left": 11600.130808121641,
-        "Top": 3428.7662592845591,
+        "Left": 11601.415977650504,
+        "Top": 3593.2679589791446,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -14563,8 +15156,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -15557.444496870979,
-    "Y": -1783.2990285542508,
-    "Zoom": 0.995795303602954
+    "X": -5291.309465052027,
+    "Y": -1112.8684623210261,
+    "Zoom": 0.64961457157155633
   }
 }
