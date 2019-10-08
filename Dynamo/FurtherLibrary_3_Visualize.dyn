@@ -6442,118 +6442,6 @@
       "Description": "Allows for DesignScript code to be authored directly"
     },
     {
-      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Adapted form Archi-Lab nodes View.HideElements, View.UnhideElements\r\n# Enable Python support and load DesignScript library\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n# Import DocumentManager and TransactionManager\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\n# Guids\r\nfrom System import Guid\r\n\r\n# Import Element wrapper extension methods\r\nimport clr\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\n# Import RevitAPI\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\n# Import System\r\nimport System\r\nfrom System.Collections.Generic import *\r\n\r\n#itertools\r\nfrom itertools import groupby\r\nfrom operator import itemgetter\r\n\r\n# Import os\r\nimport sys\r\nsys.path.append(r'C:\\Program Files (x86)\\IronPython 2.7\\Lib')\r\nimport os\r\nimport glob\r\n\r\ndef HideElement(view, item):\r\n\tif not item.IsHidden(view) and item.CanBeHidden(view):\r\n\t\tids = List[ElementId]()\r\n\t\tids.Add(item.Id)\r\n\t\tview.HideElements(ids)\r\n\treturn None\r\n\t\r\ndef UnhideElement(view, item):\r\n\tif item.IsHidden(view):\r\n\t\tids = List[ElementId]()\r\n\t\tids.Add(item.Id)\r\n\t\tview.UnhideElements(ids)\r\n\treturn None\r\n\t\r\ndef HideElements(view, items):\r\n\tids = List[ElementId]()\r\n\tfor item in items:\r\n\t\tif not item.IsHidden(view) and item.CanBeHidden(view):\r\n\t\t\tids.Add(item.Id)\r\n\tif len(ids) > 0:\r\n\t\tview.HideElements(ids)\r\n\treturn None\r\n\t\r\ndef UnhideElements(view, items):\r\n\tids = List[ElementId]()\r\n\tfor item in items:\r\n\t\tif item.IsHidden(view):\r\n\t\t\tids.Add(item.Id)\r\n\tif len(ids) > 0:\r\n\t\tview.UnhideElements(ids)\r\n\treturn None\r\n\t\r\ndef Rename(count, sheet):\r\n\tsheet.Name\r\n\tlist_of_files = glob.glob(imagePath + '\\\\*' + sheet.Name + '*') \r\n\tlatest_file = max(list_of_files, key=os.path.getctime)\r\n\tos.rename(latest_file, imagePath + '\\\\' + sheet.Name + '-' + str(count) + '.png')\r\n\treturn None\r\n\r\nitems = UnwrapElement(IN[0])\r\nsequence = IN[1]\r\nviews = UnwrapElement(IN[2])\r\nsheets = UnwrapElement(IN[3])\r\nimageWidth = IN[4]\r\npathExport = IN[5]\r\npackName = IN[6]\r\ngroups = IN[7]\r\nscores = IN[8]\r\n\r\n# Create export list of views and sheets\r\nsheetIds = List[ElementId]()\r\nfor sheet in sheets:\r\n\tsheetIds.Add(sheet.Id)\r\n\r\n# Image Export Options\r\nimagePath = pathExport\r\niOpt = ImageExportOptions()\r\niOpt.FilePath = imagePath\r\niOpt.ExportRange = ExportRange.SetOfViews\r\niOpt.SetViewsAndSheets(sheetIds)\r\niOpt.HLRandWFViewsFileType = ImageFileType.PNG\r\niOpt.ShadowViewsFileType = ImageFileType.PNG\r\niOpt.PixelSize = imageWidth\r\n\r\n# Sheet Comments Parameter\r\nguid = Guid('c42a315f-86f2-4f7d-bb8f-652afde0b23b')\r\n\r\n# GROUP IMAGES\r\nsortedItemsGroup = [x for y, x in sorted(zip(groups,items))]\r\nsortedGroups = sorted(groups)\r\ngroupItems = []\r\ngroupKeys = []\r\nfor k, group in groupby(zip(sortedGroups, sortedItemsGroup), itemgetter(0)):\r\n\tgroupItems.append([])\r\n\tgroupKeys.append(k)\r\n\tfor g in group:\r\n\t\tgroupItems[-1].append(g[1])\r\n\t\t\r\nfor k, g in zip(groupKeys, groupItems):\r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tfor view in views:\r\n\t\tHideElements(view,items)\r\n\t\tUnhideElements(view, g)\r\n\tfor sheet in sheets:\r\n\t\tparam = sheet.get_Parameter(guid)\r\n\t\tparam.Set('Group: ' + str(k))\r\n\tiOpt.FilePath = imagePath + '\\\\Group_' + str(k)\t\t\r\n\tdoc.Regenerate() # just calling uidoc.RefreshActiveView() didn't do the trick\r\n\tdoc.ExportImage(iOpt)\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\t\r\n# SCORE IMAGES\r\nsortedItemsScore = [x for y, x in sorted(zip(scores,items))]\r\nsortedScores = sorted(scores)\r\nscoreItems = []\r\nscoreKeys = []\r\nfor k, group in groupby(zip(sortedScores, sortedItemsScore), itemgetter(0)):\r\n\tscoreItems.append([])\r\n\tscoreKeys.append(k)\r\n\tfor g in group:\r\n\t\tscoreItems[-1].append(g[1])\r\n\t\t\r\nfor k, g in zip(scoreKeys, scoreItems):\r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tfor view in views:\r\n\t\tHideElements(view,items)\r\n\t\tUnhideElements(view, g)\r\n\tfor sheet in sheets:\r\n\t\tparam = sheet.get_Parameter(guid)\r\n\t\tparam.Set('Score: ' + str(k))\r\n\tiOpt.FilePath = imagePath + '\\\\Score_' + str(k*100)\t\t\r\n\tdoc.Regenerate() # just calling uidoc.RefreshActiveView() didn't do the trick\r\n\tdoc.ExportImage(iOpt)\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\r\n\r\n# Ensure all items are hidden\r\nfor v in views: \r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tHideElements(v,items)\r\n\tdoc.Regenerate()\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\t\r\n# Export Initial Image\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfor sheet in sheets:\r\n\tparam = sheet.get_Parameter(guid)\r\n\tparam.Set('')\r\ndoc.Regenerate()\r\niOpt.FilePath = imagePath + '\\\\0'\r\ndoc.ExportImage(iOpt)\r\nTransactionManager.Instance.TransactionTaskDone()\r\nfor sheet in sheets:\r\n\tRename(0,sheet)\r\n\t\r\n# Sort items by sequence and reverse the list \r\nsortedItems = [x for y, x in sorted(zip(sequence,items))]\r\n\r\n# Loop through items in order\r\nout = []\r\ntotal = len(sortedItems)\r\ncount = 1\r\nfor item in sortedItems[0:2]:\r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tfor view in views:\r\n\t\tUnhideElement(view, item)\r\n\tiOpt.FilePath = imagePath + '\\\\' + str(count)\r\n\tfor sheet in sheets:\r\n\t\tparam = sheet.get_Parameter(guid)\r\n\t\tparam.Set('Book ' + str(count) + ' / ' + str(total))\t\t\r\n\tdoc.Regenerate() # just calling uidoc.RefreshActiveView() didn't do the trick\r\n\tdoc.ExportImage(iOpt)\r\n\tfor sheet in sheets:\r\n\t\tRename(count,sheet)\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\tout.append(item)\r\n\tcount = count + 1\r\n\r\n# Ensure all items are unhidden\r\nfor v in views: \r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tUnhideElements(v,items)\r\n\tdoc.Regenerate()\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\r\n# Assign your output to the OUT variable.\r\nOUT = out\r\n",
-      "VariableInputPorts": true,
-      "Id": "6407eb13acb24ee6a63512f0dc76a9a1",
-      "Inputs": [
-        {
-          "Id": "12dc93fdab9247d2a637152417c12b66",
-          "Name": "IN[0]",
-          "Description": "Input #0",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "0fb3b18fe358469195a8a6d0a4cd6917",
-          "Name": "IN[1]",
-          "Description": "Input #1",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "531085e707f445eab876bb21cc2c867f",
-          "Name": "IN[2]",
-          "Description": "Input #2",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "fa4f36fbca714e4b8fe7b782227106fb",
-          "Name": "IN[3]",
-          "Description": "Input #3",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "5029f2773b474cd4ab041a9585eda834",
-          "Name": "IN[4]",
-          "Description": "Input #4",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "1f6cfba29d634bdcb7c05af72c7411cf",
-          "Name": "IN[5]",
-          "Description": "Input #5",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "87f3fd6b0ed1477c8e53d0ccfc5d531e",
-          "Name": "IN[6]",
-          "Description": "Input #6",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "7084d61d0dcf41b891e574e7368d3c5b",
-          "Name": "IN[7]",
-          "Description": "Input #7",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "68932b1339d04bc7b5d0c2a65a2620f6",
-          "Name": "IN[8]",
-          "Description": "Input #8",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "d3da6e953b7d4027935eccf672d9c710",
-          "Name": "IN[9]",
-          "Description": "Input #9",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "c08661d42bd44b68938c6d2df84705a7",
-          "Name": "OUT",
-          "Description": "Result of the python script",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
-    },
-    {
       "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
@@ -9573,7 +9461,7 @@
     {
       "Start": "2648fbf059e44638a849cf710714d94b",
       "End": "73dc6a975b144d8e9821a0faa6baa225",
-      "Id": "6d565afe9a204419af335e55471d1794"
+      "Id": "4206cee4543249fa937dabe707281e49"
     },
     {
       "Start": "80093c79bc1c417b8cdf3a4d330669ef",
@@ -9856,11 +9744,6 @@
       "Id": "727a9982bd68437ca390c42c860f02ac"
     },
     {
-      "Start": "b0649a9de6fd45c0837dd1a4b0651076",
-      "End": "d3da6e953b7d4027935eccf672d9c710",
-      "Id": "94b392b16cb145b38f850f29fad78b90"
-    },
-    {
       "Start": "e44e6dc6c91243fb8516aaf075317a17",
       "End": "89dc06d6a7a2474ea4f0fc8e68f4ab87",
       "Id": "6e783faee19a46e0970536dbff0a6a26"
@@ -10127,18 +10010,8 @@
     },
     {
       "Start": "a196b0b1346d4a5aa6100f27da6ba7b1",
-      "End": "0fb3b18fe358469195a8a6d0a4cd6917",
-      "Id": "00ed4c08ffe543538747b4ac6f7c539c"
-    },
-    {
-      "Start": "a196b0b1346d4a5aa6100f27da6ba7b1",
       "End": "a3f46edfb5454fb1859dd40692aa5174",
       "Id": "9da87dad220d4666bc9a4ed7095e69eb"
-    },
-    {
-      "Start": "eb5406013a1f407090e681f0f726ccf5",
-      "End": "7084d61d0dcf41b891e574e7368d3c5b",
-      "Id": "0db38e989e8c482dbdcda1ae0eb8a6c4"
     },
     {
       "Start": "eb5406013a1f407090e681f0f726ccf5",
@@ -10147,18 +10020,8 @@
     },
     {
       "Start": "b1ee05d481b1405195b5fc8e62a8aada",
-      "End": "68932b1339d04bc7b5d0c2a65a2620f6",
-      "Id": "7c7eeb6b9ddd4cb990043e7f36be2c09"
-    },
-    {
-      "Start": "b1ee05d481b1405195b5fc8e62a8aada",
       "End": "4596e2fa8c334887b6138c0197096f9c",
       "Id": "6cdc4e989ec04d9ba90f81bd8556755f"
-    },
-    {
-      "Start": "1e4533cd8a504a4d9df275e05f2f0585",
-      "End": "5029f2773b474cd4ab041a9585eda834",
-      "Id": "31933bf7ead74c6ea098aabc6a826b0f"
     },
     {
       "Start": "1e4533cd8a504a4d9df275e05f2f0585",
@@ -10187,11 +10050,6 @@
     },
     {
       "Start": "4b29afeab3ce442bb6d7bf1b64281fdb",
-      "End": "531085e707f445eab876bb21cc2c867f",
-      "Id": "ae5ec709c844463ca1154966527fa492"
-    },
-    {
-      "Start": "4b29afeab3ce442bb6d7bf1b64281fdb",
       "End": "edc322369e8d4030979fdc86091bcf43",
       "Id": "77796a55a4a147c2a748488723971a3b"
     },
@@ -10214,11 +10072,6 @@
       "Start": "960db471d3b54509b62ba52f64387f1c",
       "End": "863ab80151f444279115480bddbcaa87",
       "Id": "c593b735b691434692ce0f730d78051c"
-    },
-    {
-      "Start": "e25f561b696441e9a334f2fd46b1c5f4",
-      "End": "1f6cfba29d634bdcb7c05af72c7411cf",
-      "Id": "c6301feaf2f44d4391d6c20f547b67b5"
     },
     {
       "Start": "e25f561b696441e9a334f2fd46b1c5f4",
@@ -10247,18 +10100,8 @@
     },
     {
       "Start": "4a947e8be6174ba29b2439e73c39f310",
-      "End": "87f3fd6b0ed1477c8e53d0ccfc5d531e",
-      "Id": "7e690ec42611454d8e7d9000960d0d9b"
-    },
-    {
-      "Start": "4a947e8be6174ba29b2439e73c39f310",
       "End": "202db0453955463fb151d6420fe9e43f",
       "Id": "fdc0900dde174e6f8fc41d37e1d109b8"
-    },
-    {
-      "Start": "0214020c7e294c0fb75432a2c6c67a18",
-      "End": "fa4f36fbca714e4b8fe7b782227106fb",
-      "Id": "bc002743420e4086a7dcec37ae78c7fe"
     },
     {
       "Start": "0214020c7e294c0fb75432a2c6c67a18",
@@ -10529,11 +10372,6 @@
       "Start": "7cf3da184c794fd593110111d8dd1610",
       "End": "e807727b745942a18bc46df6edb49550",
       "Id": "5ff0b2e123424b7b8682ef161efb0a47"
-    },
-    {
-      "Start": "7cf3da184c794fd593110111d8dd1610",
-      "End": "12dc93fdab9247d2a637152417c12b66",
-      "Id": "4dca4132c1db44298f55de5d94219e47"
     },
     {
       "Start": "e51f2a1807ee4e08a94022b548a41fe4",
@@ -12459,16 +12297,6 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "Python Script",
-        "Id": "6407eb13acb24ee6a63512f0dc76a9a1",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": true,
-        "X": 16646.521921134205,
-        "Y": 1868.4445632746801
-      },
-      {
-        "ShowGeometry": true,
         "Name": "Image Width",
         "Id": "953405f63567457ab73b26f5c954be8f",
         "IsSetAsInput": false,
@@ -12853,9 +12681,9 @@
         "Id": "f8d798ac18a54eaf8f606081b80c4414",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Excluded": true,
-        "X": 16654.840410590648,
-        "Y": 2538.8041808865269
+        "Excluded": false,
+        "X": 16631.30743540201,
+        "Y": 2050.4949457222742
       },
       {
         "ShowGeometry": true,
@@ -13858,7 +13686,7 @@
         "Height": 218.0,
         "FontSize": 48.0,
         "InitialTop": 2717.8981307965787,
-        "InitialHeight": 286.94600093669305,
+        "InitialHeight": 145.0,
         "TextblockHeight": 115.0,
         "Background": "#FFA4E1FF"
       },
@@ -14080,24 +13908,6 @@
         "Background": "#FFBB87C6"
       },
       {
-        "Id": "f8faef5faa82467ab81916fb764b0daa",
-        "Title": "Animate Sequence\r\n",
-        "Nodes": [
-          "6407eb13acb24ee6a63512f0dc76a9a1",
-          "159116edc31a43b99c366e6094eda247",
-          "d5ac69528681431eb08a7f3daa0e29c3"
-        ],
-        "Left": 16636.521921134205,
-        "Top": 1743.4445632746801,
-        "Width": 452.7907006320238,
-        "Height": 452.0,
-        "FontSize": 48.0,
-        "InitialTop": 1868.4445632746801,
-        "InitialHeight": 203.80042484977548,
-        "TextblockHeight": 115.0,
-        "Background": "#FF48B9FF"
-      },
-      {
         "Id": "e64fd62c75194548b9ae72b4c002f816",
         "Title": "Override Color in MultipleViews\r\n",
         "Nodes": [
@@ -14132,7 +13942,7 @@
         "Height": 513.87599421954633,
         "FontSize": 48.0,
         "InitialTop": 1701.7955044322921,
-        "InitialHeight": 624.3259915422077,
+        "InitialHeight": 424.00844650806926,
         "TextblockHeight": 115.0,
         "Background": "#FFFFB8D8"
       },
@@ -14188,7 +13998,7 @@
         "Height": 365.23061836262082,
         "FontSize": 48.0,
         "InitialTop": 1707.5019734913119,
-        "InitialHeight": 335.17955726846571,
+        "InitialHeight": 234.23061836262082,
         "TextblockHeight": 173.0,
         "Background": "#FFFFB8D8"
       },
@@ -14325,12 +14135,12 @@
           "ceee03ddabd84447b6266e4cd4f381a9",
           "2a34302d40b544fbad975aaa34dd2add"
         ],
-        "Left": 16644.840410590648,
-        "Top": 2413.8041808865269,
+        "Left": 16621.30743540201,
+        "Top": 1925.4949457222742,
         "Width": 456.01641823427053,
         "Height": 530.0,
         "FontSize": 48.0,
-        "InitialTop": 2538.8041808865269,
+        "InitialTop": 2050.4949457222742,
         "InitialHeight": 202.18756604865484,
         "TextblockHeight": 115.0,
         "Background": "#FF48B9FF"
@@ -14406,7 +14216,7 @@
       },
       {
         "Id": "248b43d128f747d4a41b6f1851d3b05b",
-        "Title": "Colour Dictionary for Sequence Number",
+        "Title": "Colour Dictionary for Priority",
         "Nodes": [
           "6787498d87f046259c847a8eb62f379a",
           "4c5a3e4a66984e729f71b8bdb8ece628",
@@ -14711,34 +14521,6 @@
         "Background": "#FFC1D676"
       },
       {
-        "Id": "159116edc31a43b99c366e6094eda247",
-        "Title": "Incorporates scripts from Archi-Lab Export Image by View and View.Hide Elements",
-        "Nodes": [],
-        "Left": 16783.312621766228,
-        "Top": 1874.5081422864596,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "d5ac69528681431eb08a7f3daa0e29c3",
-        "Title": "0\titems\r\n1\tsequence\r\n2\tviews\r\n3\tsheets\r\n4\timageWidth\r\n5\tpathExport\r\n6\tpackName\r\n7\tgroup\r\n8\tscore\r\n9\tunplaced items",
-        "Nodes": [],
-        "Left": 16784.308313130528,
-        "Top": 1932.2449881244556,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
         "Id": "a86a3f27c0b54491ab3c8d65244e021b",
         "Title": "0\titems (iterable)\r\n1\tviews (iterable)\r\n2\tfillColours (iterable)\r\n3\tlineColour (singleton)\r\n4\tpattern (singleton)",
         "Nodes": [],
@@ -14756,8 +14538,8 @@
         "Id": "ceee03ddabd84447b6266e4cd4f381a9",
         "Title": "Incorporates scripts from Archi-Lab Export Image by View and View.Hide Elements",
         "Nodes": [],
-        "Left": 16794.856828824919,
-        "Top": 2544.8677598983068,
+        "Left": 16771.323853636281,
+        "Top": 2056.5585247340541,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -14770,8 +14552,8 @@
         "Id": "2a34302d40b544fbad975aaa34dd2add",
         "Title": "0\titems\r\n1\tsequence\r\n2\tviews\r\n3\tsheets\r\n4\timageWidth\r\n5\tpathExport\r\n6\tpackName\r\n7\tgroup\r\n8\tscore\r\n9\tunplaced items\r\n10\tunplaced item ids\r\n11\trun group images?\r\n12\trun score images?",
         "Nodes": [],
-        "Left": 16795.852520189219,
-        "Top": 2600.9917469351817,
+        "Left": 16772.319545000581,
+        "Top": 2112.6825117709291,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -14781,8 +14563,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -10738.702715773417,
-    "Y": -2622.6075972763792,
-    "Zoom": 1.2563603201551508
+    "X": -15557.444496870979,
+    "Y": -1783.2990285542508,
+    "Zoom": 0.995795303602954
   }
 }

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>Miscellany</name>
+  </assembly>
+  <namespaces>
+    <namespace name="Miscellany">
+      <category>Miscellany</category>
+    </namespace>
+    <namespace name="Miscellany.ContainerPacking">
+      <category>Miscellany.ContainerPacking</category>
+    </namespace>
+    <namespace name="Miscellany.ContainerPacking.Entities">
+      <category>Miscellany.ContainerPacking.Entities</category>
+    </namespace>
+    <namespace name="Miscellany.ContainerPacking.Algorithms">
+      <category>Miscellany.ContainerPacking.Algorithms</category>
+    </namespace>
+    <namespace name="Miscellany.Geometry">
+      <category>Miscellany.Geometry</category>
+    </namespace>
+    <namespace name="Miscellany.List">
+      <category>Miscellany.List</category>
+    </namespace>
+    <namespace name="Miscellany.AWS">
+      <category>Miscellany.AWS</category>
+    </namespace>
+  </namespaces>
+</doc>

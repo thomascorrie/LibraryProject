@@ -1,0 +1,26 @@
+﻿{
+"license": "AGPL-3.0",
+"file_hash": null,
+"name": "Miscellany",
+"version": "1.2.0",
+"description": "Miscellaneous nodes for Dynamo. Includes an implementation of David Chapman's 3DContainerPacking library. Miscellany is authored and maintained by Thomas Corrie",
+"group": "",
+"keywords": [
+"3DContainerPacking",
+"Miscellany",
+""
+],
+"dependencies": [],
+"contents": "",
+"engine_version": "2.0.2.6826",
+"engine": "dynamo",
+"engine_metadata": "",
+"site_url": "http://www.thomascorrie.com",
+"repository_url": "https://github.com/thomascorrie/Miscellany",
+"contains_binaries": true,
+  "node_libraries": [
+    "Miscellany, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null",
+    "Miscellany.customization, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null",
+    "MiscellanyUI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

@@ -1,0 +1,1000 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Miscellany</name>
+    </assembly>
+    <members>
+        <member name="T:Miscellany.About">
+            <summary>
+            About
+            </summary>
+        </member>
+        <member name="M:Miscellany.About.Miscellany">
+            <summary>
+                About Miscellany. Only to force the logo to be default icon.
+            </summary>
+            <returns name="About">Miscellany is a package for Dynamo 2</returns>
+            <search>
+            Miscellany
+            </search>
+        </member>
+        <member name="T:Miscellany.ContainerPacking.Algorithms">
+            <summary>
+            The container to pack items into.
+            </summary>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.Algorithms.#ctor(System.Int32)">
+            <summary>
+                Creates a new Container for Container Packing
+            </summary>
+            <param name="id">The algorithm ID</param>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.Algorithms.EB_AFIT(System.Int32,Miscellany.ContainerPacking.Score)">
+            <summary>
+            Defines an EB_AFIT packing algorithm using David Chapman's 3DContainerPacking library
+            </summary>
+            <param name="containerOrientation">Container orientations to consider</param>
+            <param name="scoringConfiguration">Optional scoring configuration</param>
+            <returns name="algorithm">Algorithm</returns>
+            <search>
+            containerpacking
+            </search>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.Algorithms.PlaceBooks(System.Int32,System.Double,System.Double,Miscellany.ContainerPacking.Score)">
+            <summary>
+            Defines a Place Books algorithm. Places items along the container like a bookshelf.
+            </summary>
+            <param name="alignment">The alignment for the books</param>
+            <param name="maximumCantilever">The maximum cantilever allowed</param>
+            <param name="maximumGap">Maximum gap at the end of the shelf</param>
+            <param name="scoringConfiguration">Optional scoring configuration</param>
+            <returns name="algorithm">Algorithm</returns>
+            <search>
+            containerpacking
+            </search>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.Algorithms.PlaceBooksAndInfill(System.Int32,System.Double,System.Double,System.Int32,System.Int32,System.Double,Miscellany.ContainerPacking.Score)">
+            <summary>
+            Defines a Place Books and Infill algorithm. Places items along the container like a bookshelf and then uses the space behind and above to pack with items using the EB_AFIT packing algorithm.
+            </summary>
+            <param name="alignment">The alignment for the books</param>
+            <param name="maximumCantilever">The maximum cantilever allowed</param>
+            <param name="maximumGap">Maximum gap at the end of the shelf</param>
+            <param name="infillContainerOrientation">Container orientations to consider for the infill volumes</param>
+            <param name="infillVolumePriority">Which orientation to prioritize for the infill volumes</param>
+            <param name="infillMaxHeight">Sets the maximum height for horizontal infill for the Place Books algorithm</param>
+            <param name="scoringConfiguration">Optional scoring configuration</param>
+            <returns name="algorithm">Algorithm</returns>
+            <search>
+            containerpacking
+            </search>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Algorithms.ID">
+            <summary>
+                Gets the algorithm ID.
+            </summary>
+            <value>
+            The algorithm ID.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Algorithms.Orientation">
+            <summary>
+                Sets the orientation for the EBAFIT algorithm.
+            </summary>
+            <value>
+            The orientation for EBAFIT.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Algorithms.MaximumGap">
+            <summary>
+                Sets the maximum gap for the Place Books algorithm.
+            </summary>
+            <value>
+            The maximum gap for the Place Books algorithm.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Algorithms.Alignment">
+            <summary>
+                Sets the alignment for the Place Books algorithm.
+            </summary>
+            <value>
+            The alignment for the Place Books algorithm.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Algorithms.Cantilever">
+            <summary>
+                Sets the maximum cantilever allowed for the Place Books algorithm.
+            </summary>
+            <value>
+            The maximum cantilever allowed for the Place Books algorithm.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Algorithms.InfillMaxHeight">
+            <summary>
+                Sets the maximum height for horizontal infill for the Place Books algorithm.
+            </summary>
+            <value>
+            The maximum height for horizontal infill for the Place Books algorithm.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Algorithms.InfillPriority">
+            <summary>
+                Sets the volume priority for Place Books and Infill.
+            </summary>
+            <value>
+            The volume priority for Place Books and Infill.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Algorithms.ScoringConfiguration">
+            <summary>
+                Sets the 
+            </summary>
+            <value>
+            Whether to use Item Orientation Scoring or not.
+            </value>
+        </member>
+        <member name="T:Miscellany.ContainerPacking.Algorithm">
+            <summary>
+            PackingService
+            </summary>
+            <summary>
+            PackingService
+            </summary>
+        </member>
+        <member name="T:Miscellany.ContainerPacking.Entities.Container">
+            <summary>
+            The container to pack items into.
+            </summary>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.Entities.Container.#ctor(System.Int32,System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+                Creates a new Container for Container Packing
+            </summary>
+            <param name="id">The container ID</param>
+            <param name="length">The container length</param>
+            <param name="width">The container width</param>
+            <param name="height">The container height</param>
+            <param name="priority">The container priority. 0 is highest, larger numbers are lower priority.</param>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Container.ID">
+            <summary>
+                Gets the container ID.
+            </summary>
+            <value>
+            The container ID.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Container.Priority">
+            <summary>
+                Gets the container priority.
+            </summary>
+            <value>
+            The container priority. Zero is the highest priority
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Container.Length">
+            <summary>
+                Gets the container length.
+            </summary>
+            <value>
+            The container length.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Container.Width">
+            <summary>
+                Gets the container width.
+            </summary>
+            <value>
+            The container width.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Container.Height">
+            <summary>
+                Gets the container height.
+            </summary>
+            <value>
+            The container height.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Container.CoordX">
+            <summary>
+                Gets the x coordinate of the location of the container.
+            </summary>
+            <value>
+            The x coordinate of the location of the container.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Container.CoordY">
+            <summary>
+                Gets the y coordinate of the location of the container.
+            </summary>
+            <value>
+            The y coordinate of the location of the container.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Container.CoordZ">
+            <summary>
+                Gets the z coordinate of the location of the container.
+            </summary>
+            <value>
+            The z coordinate of the location of the container.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Container.Volume">
+            <summary>
+                Gets the volume of the container.
+            </summary>
+            <value>
+            The volume of the container.
+            </value>
+        </member>
+        <member name="T:Miscellany.ContainerPacking.Entities.Item">
+            <summary>
+            An item to be packed. Also used to hold post-packing details for the item.
+            </summary>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.Entities.Item.#ctor(System.Int32,System.Double,System.Double,System.Double,System.Int32,System.Int32,System.Int32)">
+            <summary>
+                Creates a new Item for Container Packing
+            </summary>
+            <param name="id">The item ID.</param>
+            <param name="dim1">The length of one of the three item dimensions</param>
+            <param name="dim2">The length of another of the three item dimensions</param>
+            <param name="dim3">The length of the other of the three item dimensions</param>
+            <param name="quantity">The item quantity</param>
+            <param name="group">The item packing group</param>
+            <param name="priority">The item priority. 0 is highest, larger numbers are lower priority.</param>
+            <returns name="item">Item object</returns>
+            <search>
+            containerpacking
+            </search>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.ID">
+            <summary>
+                Gets the item ID.
+            </summary>
+            <value>
+            The item ID.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.IsPacked">
+            <summary>
+                Indicates whether this item has already been packed.
+            </summary>
+            <value>
+              True if the item has already been packed; otherwise, false.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.ContainerID">
+            <summary>
+                If the item has been packed, gets the id of the Container
+            </summary>
+            <value>
+              The id of the Container.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.Sequence">
+            <summary>
+                If the item has been packed, gets the pack sequence number.
+            </summary>
+            <value>
+            The pack sequence number.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.Score">
+            <summary>
+                If the item has been packed, gets the positional score.
+            </summary>
+            <value>
+            The item positional score.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.Group">
+            <summary>
+                The packing group for the item.
+            </summary>
+            <value>
+            The item packing group.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.Dim1">
+            <summary>
+                Gets the length of one of the item dimensions.
+            </summary>
+            <value>
+            The first item dimension.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.Dim2">
+            <summary>
+                Gets the length another of the item dimensions.
+            </summary>
+            <value>
+            The second item dimension.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.Dim3">
+            <summary>
+                Gets the third of the item dimensions.
+            </summary>
+            <value>
+            The third item dimension.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.CoordX">
+            <summary>
+                Gets the x coordinate of the location of the packed item within the container.
+            </summary>
+            <value>
+            The x coordinate of the location of the packed item within the container.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.CoordY">
+            <summary>
+                Gets the y coordinate of the location of the packed item within the container.
+            </summary>
+            <value>
+            The y coordinate of the location of the packed item within the container.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.CoordZ">
+            <summary>
+                Gets the z coordinate of the location of the packed item within the container.
+            </summary>
+            <value>
+            The z coordinate of the location of the packed item within the container.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.Quantity">
+            <summary>
+                Gets the item quantity.
+            </summary>
+            <value>
+            The item quantity.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.Priority">
+            <summary>
+                Gets the item priority.
+            </summary>
+            <value>
+            The item priority. Zero is the highest priority
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.PackDimX">
+            <summary>
+                Gets the x dimension of the orientation of the item as it has been packed.
+            </summary>
+            <value>
+            The x dimension of the orientation of the item as it has been packed.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.PackDimY">
+            <summary>
+                Gets the y dimension of the orientation of the item as it has been packed.
+            </summary>
+            <value>
+            The y dimension of the orientation of the item as it has been packed.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.PackDimZ">
+            <summary>
+                Gets the z dimension of the orientation of the item as it has been packed.
+            </summary>
+            <value>
+            The z dimension of the orientation of the item as it has been packed.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Entities.Item.Volume">
+            <summary>
+                Gets the item volume.
+            </summary>
+            <value>
+            The item volume.
+            </value>
+        </member>
+        <member name="T:Miscellany.ContainerPacking.PackingResult">
+            <summary>
+            PackingService
+            </summary>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.PackingResult.#ctor">
+            <summary>
+                Gets the Packing Result.
+            </summary>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingResult.IsCompletePack">
+            <summary>
+            Gets or sets a value indicating whether all of the items are packed in the container.
+            </summary>
+            <value>
+            True if all the items are packed in the container; otherwise, false.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingResult.EndSequence">
+            <summary>
+            Gets or sets the sequence number of the last packed item.
+            </summary>
+            <value>
+            Sequence number
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingResult.PackedItems">
+            <summary>
+            Gets or sets the list of packed items.
+            </summary>
+            <value>
+            The list of packed items.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingResult.PackTimeInMilliseconds">
+            <summary>
+            Gets or sets the elapsed pack time in milliseconds.
+            </summary>
+            <value>
+            The elapsed pack time in milliseconds.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingResult.PercentContainerVolumePacked">
+            <summary>
+            Gets or sets the percent of container volume packed.
+            </summary>
+            <value>
+            The percent of container volume packed.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingResult.PercentItemVolumePacked">
+            <summary>
+            Gets or sets the percent of item volume packed.
+            </summary>
+            <value>
+            The percent of item volume packed.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingResult.UnpackedItems">
+            <summary>
+            Gets or sets the list of unpacked items.
+            </summary>
+            <value>
+            The list of unpacked items.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingResult.BestFitCase">
+            <summary>
+            Gets or sets the best fit case
+            </summary>
+            <value>
+            The best fit case
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingResult.Report">
+            <summary>
+            For reporting
+            </summary>
+            <value>
+            For reporting
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingResult.Containers">
+            <summary>
+            For reporting
+            </summary>
+            <value>
+            For reporting
+            </value>
+        </member>
+        <member name="T:Miscellany.ContainerPacking.Conversion">
+            <summary>
+            PackingService
+            </summary>
+        </member>
+        <member name="T:Miscellany.ContainerPacking.LeftOver">
+            <summary>
+            LeftOver space from Item placing
+            </summary>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.LeftOver.#ctor(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+                Creates a leftover volume for Container Packing.
+            </summary>
+            <param name="width">The leftover width</param>
+            <param name="depth">The leftover depth</param>
+            <param name="height">The leftover height</param>
+            <param name="x">The leftover length</param>
+            <param name="y">The leftover length</param>
+            <param name="z">The leftover length</param>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.LeftOver.Width">
+            <summary>
+                Gets the leftover width.
+            </summary>
+            <value>
+            The leftover width.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.LeftOver.Depth">
+            <summary>
+                Gets the leftover depth.
+            </summary>
+            <value>
+            The leftover depth.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.LeftOver.Height">
+            <summary>
+                Gets the leftover height.
+            </summary>
+            <value>
+            The leftover height.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.LeftOver.X">
+            <summary>
+                Gets the leftover X position.
+            </summary>
+            <value>
+            The leftover X position.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.LeftOver.Y">
+            <summary>
+                Gets the leftover Y position.
+            </summary>
+            <value>
+            The leftover Y position.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.LeftOver.Z">
+            <summary>
+                Gets the leftover Z position.
+            </summary>
+            <value>
+            The leftover X position.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.LeftOver.Volume">
+            <summary>
+                Gets the leftover volume.
+            </summary>
+            <value>
+            The leftover volume.
+            </value>
+        </member>
+        <member name="T:Miscellany.ContainerPacking.PackingService">
+            <summary>
+            PackingService
+            </summary>
+            <summary>
+            PackingService
+            </summary>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.PackingService.PackContainer(Miscellany.ContainerPacking.Entities.Container,System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Item},Miscellany.ContainerPacking.Algorithms)">
+            <summary>
+            Runs the chosen packing algorithm given a single container and a list of items to pack. The default algorithm (1) is EB-AFIT from David Chapman's 3DContainerPacking library.
+            </summary>
+            <param name="container">Container</param>
+            <param name="itemsToPackList">Items to pack</param>
+            <param name="algorithm">The chosen Algorithm</param>
+            <returns name="packedItems">Items that were successfully packed</returns>
+            <returns name="unpackedItems">Items that were not packed</returns>
+            <returns name="isCompletePack">Are all items packed?</returns>
+            <returns name="packTimeInMilliseconds">Pack time</returns>
+            <returns name="percentContainerVolumePacked">Percentage of the container that is packed</returns>
+            <returns name="percentItemVolumePacked">Percentage of items packed</returns>
+            <search>
+            containerpacking
+            </search>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.PackingService.PackContainers(System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Container},System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Item},Miscellany.ContainerPacking.Algorithms,System.Int32,System.Int32)">
+            <summary>
+            Runs the chosen packing algorithm on a list of containers and a list of items to pack. The default algorithm (1) is EB-AFIT from David Chapman's 3DContainerPacking library.
+            </summary>
+            <param name="containers">Containers in order</param>
+            <param name="itemsToPack">Items to pack</param>
+            <param name="algorithm">Algorithm ID</param>
+            <param name="containerStrategy">The strategy for packing multiple containers</param>
+            <param name="minimumItems">The minimum number of items for group packing</param>
+            <returns name="packedItems">Items that were successfully packed</returns>
+            <returns name="unpackedItems">Items that were not packed</returns>
+            <returns name="isCompletePack">Are all items packed?</returns>
+            <returns name="containers">Containers</returns>
+            <returns name="packingStatistics">Statistics for the packing result</returns>
+            <search>
+            containerpacking
+            </search>
+        </member>
+        <member name="T:Miscellany.ContainerPacking.PackingServiceOld">
+            <summary>
+            PackingService
+            </summary>
+            <summary>
+            PackingService
+            </summary>
+            <summary>
+            PackingService
+            </summary>
+            <summary>
+            PackingService
+            </summary>
+            <summary>
+            PackingService
+            </summary>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.PackingServiceOld.PackContainerOld(Miscellany.ContainerPacking.Entities.Container,System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Item},System.Int32,System.Int32)">
+            <summary>
+            Runs the chosen packing algorithm given a single container and a list of items to pack. The default algorithm (1) is EB-AFIT from David Chapman's 3DContainerPacking library.
+            </summary>
+            <param name="container">Container</param>
+            <param name="itemsToPack">Items to pack</param>
+            <param name="algorithm">Algorithm ID</param>
+            <param name="containerOrientation">The orientations of the container to test</param>
+            <returns name="packedItems">Items that were successfully packed</returns>
+            <returns name="unpackedItems">Items that were not packed</returns>
+            <returns name="isCompletePack">Are all items packed?</returns>
+            <returns name="packTimeInMilliseconds">Pack time</returns>
+            <returns name="percentContainerVolumePacked">Percentage of the container that is packed</returns>
+            <returns name="percentItemVolumePacked">Percentage of items packed</returns>
+            <search>
+            containerpacking
+            </search>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.PackingServiceOld.PackContainersOld(System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Container},System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Item},System.Int32,System.Int32)">
+            <summary>
+            Runs the chosen packing algorithm as a greedy strategy on a list of containers and a list of items to pack. It aims to solve optimally at each container in turn and is not globally optimal. The default algorithm (1) is EB-AFIT from David Chapman's 3DContainerPacking library.
+            </summary>
+            <param name="containers">Containers in order</param>
+            <param name="itemsToPack">Items to pack</param>
+            <param name="algorithm">Algorithm ID</param>
+            <param name="containerOrientation">The orientations of the container to test</param>
+            <returns name="packedItems">Items that were successfully packed</returns>
+            <returns name="unpackedItems">Items that were not packed</returns>
+            <returns name="isCompletePack">Are all items packed?</returns>
+            <returns name="packTimeInMilliseconds">Total pack time</returns>
+            <returns name="totalPackTimeInMilliseconds">Pack time per container</returns>
+            <returns name="percentContainerVolumePacked">Percentage of the container that is packed</returns>
+            <returns name="percentItemVolumePacked">Percentage of items packed</returns>
+            <search>
+            containerpacking
+            </search>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.PackingServiceOld.PackContainersWithGroups(System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Container},System.Collections.Generic.List{System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Item}},System.Int32,System.Int32)">
+            <summary>
+            Runs the chosen packing algorithm as a greedy strategy on a list of containers and groups of items to pack. When a group of items is exhausted the algorithm moves on to the next container and starts a new group. It aims to solve optimally at each container in turn and is not globally optimal. The default algorithm (1) is EB-AFIT from David Chapman's 3DContainerPacking library.
+            </summary>
+            <param name="containers">Containers in order</param>
+            <param name="itemsToPack">Lists of Items to pack</param>
+            <param name="algorithm">Algorithm ID</param>
+            <param name="containerOrientation">The orientations of the container to test</param>
+            <returns name="packedItems">Items that were successfully packed</returns>
+            <returns name="unpackedItems">Items that were not packed</returns>
+            <returns name="isCompletePack">Are all items packed?</returns>
+            <returns name="packTimeInMilliseconds">Total pack time</returns>
+            <returns name="totalPackTimeInMilliseconds">Pack time per container</returns>
+            <returns name="percentContainerVolumePacked">Percentage of the container that is packed</returns>
+            <returns name="percentItemVolumePacked">Percentage of items packed</returns>
+            <search>
+            containerpacking
+            </search>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.PackingServiceOld.PackContainersWithGroupsContinuously(System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Container},System.Collections.Generic.List{System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Item}},System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Runs the chosen packing algorithm as a greedy strategy on a list of containers and a list of items to pack. When the number of Items in a group dwindles below the minimum number, the difference is made up with Items taken from the next group. It aims to solve optimally at each container in turn and is not globally optimal. The default algorithm (1) is EB-AFIT from David Chapman's 3DContainerPacking library.
+            </summary>
+            <param name="containers">Containers in order</param>
+            <param name="itemsToPack">Items to pack</param>
+            <param name="algorithm">Algorithm ID</param>
+            <param name="minimumItems">The minimum number of items to consider for a container</param>
+            <param name="containerOrientation">The orientations of the container to test</param>
+            <returns name="packedItems">Items that were successfully packed</returns>
+            <returns name="unpackedItems">Items that were not packed</returns>
+            <returns name="isCompletePack">Are all items packed?</returns>
+            <returns name="packTimeInMilliseconds">Total pack time</returns>
+            <returns name="totalPackTimeInMilliseconds">Pack time per container</returns>
+            <returns name="percentContainerVolumePacked">Percentage of the container that is packed</returns>
+            <returns name="percentItemVolumePacked">Percentage of items packed</returns>
+            <search>
+            containerpacking
+            </search>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.PackingServiceOld.PlaceItemsAndInfill(System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Container},System.Collections.Generic.List{System.Collections.Generic.List{Miscellany.ContainerPacking.Entities.Item}},System.Int32,System.Int32,System.Double,System.Int32)">
+            <summary>
+            Intended for packing books on shelves. The books are first placed vertically on a shelf and then the remaining space is packed using the chosen packing algorithm. When the number of Items in a group dwindles below the minimum number, the difference is made up with Items taken from the next group. It aims to solve optimally at each container in turn and is not globally optimal. The default algorithm (1) is EB-AFIT from David Chapman's 3DContainerPacking library.
+            </summary>
+            <param name="containers">Containers in order</param>
+            <param name="itemsToPack">Items to pack</param>
+            <param name="algorithm">Algorithm ID</param>
+            <param name="minimumItems">The minimum number of items to consider for a container</param>
+            <param name="maximumGap">The maximum gap to ignore at the end of a shelf</param>
+            <param name="containerOrientation">The orientations of the container to test</param>
+            <returns name="packedItems">Items that were successfully packed</returns>
+            <returns name="unpackedItems">Items that were not packed</returns>
+            <returns name="isCompletePack">Are all items packed?</returns>
+            <returns name="packTimeInMilliseconds">Total pack time</returns>
+            <returns name="totalPackTimeInMilliseconds">Pack time per container</returns>
+            <returns name="percentContainerVolumePacked">Percentage of the container that is packed</returns>
+            <returns name="percentItemVolumePacked">Percentage of items packed</returns>
+            <search>
+            containerpacking
+            </search>
+        </member>
+        <member name="T:Miscellany.ContainerPacking.Score">
+            <summary>
+            PackingService
+            </summary>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.Score.#ctor(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+                Creates a new Scoring Configuration with relative weights for the different scoring options. A value of 0 indicates that the score will be ignored.
+            </summary>
+            <param name="itemOrientation">The scoring weight for the item orientation</param>
+            <param name="itemPosition">The scoring weight for the item position within the container</param>
+            <param name="itemPriority">The scoring weight for the item priority</param>
+            <param name="itemGrouping">The scoring weight for the item grouping</param>
+            <returns name="scoringConfiguration">Scoring Configuration</returns>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Score.UseScoring">
+            <summary>
+                Gets whether scoring is used.
+            </summary>
+            <value>
+            Whether scoring is used.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Score.ItemOrientationScoreWeight">
+            <summary>
+                Sets the Item Orientation Score Weight.
+            </summary>
+            <value>
+            The Item Orientation Score Weight.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Score.ItemPositionScoreWeight">
+            <summary>
+                Sets the Item Position Score Weight.
+            </summary>
+            <value>
+            The Item Position Score Weight.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Score.ItemGroupingScoreWeight">
+            <summary>
+                Sets the Item Grouping Score Weight.
+            </summary>
+            <value>
+            The Item Grouping Score Weight.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Score.ItemPriorityScoreWeight">
+            <summary>
+                Sets the Container Position Score Weight.
+            </summary>
+            <value>
+            The Container Position Weight.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.Score.TotalScoreWeight">
+            <summary>
+                Gets the Scoring Weight Total.
+            </summary>
+            <value>
+            The Scoring Weight Total.
+            </value>
+        </member>
+        <member name="T:Miscellany.ContainerPacking.PackingStatistics">
+            <summary>
+            PackingService
+            </summary>
+        </member>
+        <member name="M:Miscellany.ContainerPacking.PackingStatistics.#ctor">
+            <summary>
+                Gets the Packing Result.
+            </summary>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingStatistics.AlgorithmID">
+            <summary>
+            Gets the Algorithm ID.
+            </summary>
+            <value>
+            The Algorithm ID.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingStatistics.PackTimeInMilliseconds">
+            <summary>
+            Gets or sets the elapsed pack time in milliseconds.
+            </summary>
+            <value>
+            The elapsed pack time in milliseconds.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingStatistics.TotalPackTimeInMilliseconds">
+            <summary>
+            Gets or sets the total elapsed pack time in milliseconds.
+            </summary>
+            <value>
+            The total elapsed pack time in milliseconds.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingStatistics.PercentContainerVolumePacked">
+            <summary>
+            Gets or sets the percent of container volume packed.
+            </summary>
+            <value>
+            The percent of container volume packed.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingStatistics.PercentItemVolumePacked">
+            <summary>
+            Gets or sets the percent of item volume packed.
+            </summary>
+            <value>
+            The percent of item volume packed.
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingStatistics.BestFitCase">
+            <summary>
+            Gets or sets the best fit case
+            </summary>
+            <value>
+            The best fit case
+            </value>
+        </member>
+        <member name="P:Miscellany.ContainerPacking.PackingStatistics.Report">
+            <summary>
+            For reporting
+            </summary>
+            <value>
+            For reporting
+            </value>
+        </member>
+        <member name="T:Miscellany.AWS.Client">
+            <summary>
+            Client
+            </summary>
+        </member>
+        <member name="M:Miscellany.AWS.Client.#ctor(System.String)">
+            <summary>
+                Creates a client for AWS DynamoDB
+            </summary>
+            <param name="region">The AWS region</param>
+            <returns name="string">Message</returns>
+            <search>
+            AWS
+            </search>
+        </member>
+        <member name="T:Miscellany.AWS.Table">
+            <summary>
+            Client
+            </summary>
+        </member>
+        <member name="M:Miscellany.AWS.Table.#ctor(Miscellany.AWS.Client,System.String)">
+            <summary>
+                Represents a table within AWS DynamoDBB
+            </summary>
+            <param name="client">AWS DynamoDB Client</param>
+            <param name="tableName">AWS DynamoDB Table Name</param>
+            <returns name="string">Message</returns>
+            <search>
+            AWS
+            </search>
+        </member>
+        <member name="T:Miscellany.AWS.DynamoDB">
+            <summary>
+            Data
+            </summary>
+        </member>
+        <member name="M:Miscellany.AWS.DynamoDB.ToDynamoDBCreds(System.String)">
+            <summary>
+                Writes to AWS DynamoDB Database
+            </summary>
+            <param name="tableName">The name of the DynamoDB table</param>
+            <returns name="string">Message</returns>
+            <search>
+            decimal
+            </search>
+        </member>
+        <member name="M:Miscellany.AWS.DynamoDB.ToDynamoDB(System.String)">
+            <summary>
+                Writes to AWS DynamoDB Database
+            </summary>
+            <param name="tableName">The name of the DynamoDB table</param>
+            <search>
+            decimal
+            </search>
+        </member>
+        <member name="T:Miscellany.List.Modifies">
+            <summary>
+            Modifies
+            </summary>
+        </member>
+        <member name="M:Miscellany.List.Modifies.PairItems(System.Collections.IList)">
+            <summary>
+                Pairs items in a list: [a,b,c,d] > [[a,b],[b,c],[c,d]]
+            </summary>
+            <param name="list">List of items to pair</param>
+            <returns name="list">Nested list of paired items</returns>
+            <search>
+            list, pair
+            </search>
+        </member>
+        <member name="T:Miscellany.Maths">
+            <summary>
+            Functions
+            </summary>
+        </member>
+        <member name="M:Miscellany.Maths.ToDecimal(System.Double)">
+            <summary>
+                Converts a double to a decimal. If the double is above or below the maximum range for a decimal then the number is bounded to theos limits
+            </summary>
+            <param name="number">Input integer or double</param>
+            <returns name="decimal">Decimal</returns>
+            <search>
+            decimal
+            </search>
+        </member>
+        <member name="M:Miscellany.Maths.ToDouble(System.Decimal)">
+            <summary>
+                Converts a decimal to a double
+            </summary>
+            <param name="inputDecimal">Input decimal</param>
+            <returns name="double">Double</returns>
+            <search>
+            decimal
+            </search>
+        </member>
+        <member name="M:Miscellany.Maths.RunningTotal(System.Collections.Generic.IList{System.Double})">
+            <summary>
+                Calculates a running total for a list of numbers
+            </summary>
+            <param name="list">List of doubles</param>
+            <returns name="list">List of running totals</returns>
+            <search>
+            sum
+            </search>
+        </member>
+        <member name="T:Miscellany.Geometry.Abstract">
+            <summary>
+            Abstract
+            </summary>
+        </member>
+        <member name="M:Miscellany.Geometry.Abstract.CoordinateSystemDisplay(Autodesk.DesignScript.Geometry.CoordinateSystem,System.Double)">
+            <summary>
+            Shows scalable lines representing the CoordinateSystem axes and rectangles for the planes
+            </summary>
+            <param name="coordinateSystem">Autodesk.DesignScript.Geometry.CoordinateSystem</param>
+            <param name="length">double</param>
+            <returns name="Display">GeometryColor</returns>
+            <returns name="Origin">Point</returns>
+            <returns name="XAxis">Vector</returns>
+            <returns name="YAxis">Vector</returns>
+            <returns name="ZAxis">Vector</returns>
+            <returns name="XYPlane">Plane</returns>
+            <returns name="YZPlane">Plane</returns>
+            <returns name="ZXPlane">Plane</returns>
+        </member>
+        <member name="M:Miscellany.Geometry.Abstract.PlaneDisplay(Autodesk.DesignScript.Geometry.Plane,System.Double)">
+            <summary>
+            Shows scalable lines representing the axes and a rectangle for the Plane
+            </summary>
+            <param name="plane">Autodesk.DesignScript.Geometry.Plane</param>
+            <param name="length">double</param>
+            <returns name="Display">GeometryColor</returns>
+            <returns name="Origin">Point</returns>
+            <returns name="XAxis">Vector</returns>
+            <returns name="YAxis">Vector</returns>
+            <returns name="Normal">Vector</returns>
+        </member>
+        <member name="M:Miscellany.Geometry.Abstract.VectorDisplay(Autodesk.DesignScript.Geometry.Vector,Autodesk.DesignScript.Geometry.Point,System.Double)">
+            <summary>
+            Shows a scalable line representing a Vector from a chosen starting point
+            </summary>
+            <param name="vector">Autodesk.DesignScript.Geometry.Vector</param>
+            <param name="startPoint">Autodesk.DesignScript.Geometry.Point</param>
+            <param name="scale">double</param>
+            <returns name="Display">GeometryColor</returns>
+            <returns name="x">double</returns>
+            <returns name="y">double</returns>
+            <returns name="z">double</returns>
+            <returns name="Length">double</returns>
+        </member>
+    </members>
+</doc>
